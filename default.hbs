@@ -69,7 +69,11 @@
                     <span class="bc-logo-mark bc-logo-mark--sm"></span>
                     <span class="bc-footer-logo-name">{{@site.title}}</span>
                 </div>
-                <p class="bc-footer-copy">&copy; {{date format="YYYY"}} {{@site.title}}. {{{t "Powered by {ghostlink}" ghostlink="<a href=\"https://ghost.org/\" target=\"_blank\" rel=\"noopener\">Ghost</a>"}}}</p>
+                {{#if @custom.footer_tagline}}
+                    <p class="bc-footer-copy">&copy; {{date format="YYYY"}} {{@site.title}}. {{@custom.footer_tagline}}</p>
+                {{else}}
+                    <p class="bc-footer-copy">&copy; {{date format="YYYY"}} {{@site.title}}. {{{t "Powered by {ghostlink}" ghostlink="<a href=\"https://ghost.org/\" target=\"_blank\" rel=\"noopener\">Ghost</a>"}}}</p>
+                {{/if}}
             </div>
             <nav class="bc-footer-nav" aria-label="{{t "Footer navigation"}}">
                 {{navigation}}
