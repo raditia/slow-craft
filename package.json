@@ -1,0 +1,75 @@
+{
+    "name": "the-bored-coder",
+    "description": "The Bored Coder — a personal Ghost theme",
+    "version": "2.1.0",
+    "private": true,
+    "engines": {
+        "ghost": ">=5.0.0"
+    },
+    "license": "MIT",
+    "author": {
+        "name": "Ghost Foundation",
+        "email": "hello@ghost.org",
+        "url": "https://ghost.org"
+    },
+    "keywords": [
+        "ghost",
+        "theme",
+        "ghost-theme"
+    ],
+    "docs": "https://headline.ghost.io/about/",
+    "config": {
+        "posts_per_page": 12,
+        "image_sizes": {
+            "xs": {
+                "width": 150
+            },
+            "s": {
+                "width": 300
+            },
+            "m": {
+                "width": 720
+            },
+            "l": {
+                "width": 960
+            },
+            "xl": {
+                "width": 1200
+            },
+            "xxl": {
+                "width": 2000
+            }
+        },
+        "card_assets": true,
+        "custom": {
+            "hero_subtitle": {
+                "type": "text",
+                "default": "Written by someone who is, quite often, productively bored.",
+                "group": "homepage"
+            }
+        }
+    },
+    "scripts": {
+        "dev": "gulp",
+        "test": "gscan .",
+        "zip": "gulp zip"
+    },
+    "devDependencies": {
+        "@tryghost/shared-theme-assets": "2.6.1",
+        "@tryghost/theme-translations": "^0.0.9",
+        "autoprefixer": "10.5.0",
+        "beeper": "2.1.0",
+        "cssnano": "8.0.1",
+        "gscan": "6.2.1",
+        "gulp": "5.0.1",
+        "gulp-concat": "2.6.1",
+        "gulp-livereload": "4.0.2",
+        "gulp-postcss": "10.0.0",
+        "gulp-uglify": "3.0.2",
+        "gulp-zip": "5.1.0",
+        "ordered-read-streams": "2.0.0",
+        "postcss": "8.5.15",
+        "postcss-easy-import": "4.0.0",
+        "pump": "3.0.4"
+    }
+}

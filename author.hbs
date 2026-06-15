@@ -1,0 +1,51 @@
+{{!< default}}
+
+<main class="bc-main">
+    <div class="bc-container bc-container--narrow">
+
+        {{#author}}
+        <div class="bc-page-head bc-page-head--author bc-reveal">
+            {{#if profile_image}}
+                <img class="bc-author-page-avatar" src="{{profile_image}}" alt="{{name}}">
+            {{/if}}
+            <div>
+                <h1 class="bc-page-title">{{name}}</h1>
+                {{#if bio}}
+                    <p class="bc-page-description">{{bio}}</p>
+                {{/if}}
+                <div class="bc-author-social">
+                    {{#if twitter}}
+                        <a class="bc-author-social-link" href="{{social_url type="twitter"}}" target="_blank" rel="noopener">Twitter</a>
+                    {{/if}}
+                    {{#if website}}
+                        <a class="bc-author-social-link" href="{{website}}" target="_blank" rel="noopener">Website</a>
+                    {{/if}}
+                </div>
+            </div>
+        </div>
+        {{/author}}
+
+        <div class="bc-writing-list">
+            {{#foreach posts}}
+                <a class="bc-writing-row bc-reveal" href="{{url}}">
+                    <time class="bc-writing-date" datetime="{{date format="YYYY-MM-DD"}}">{{date format="DD MMM YYYY"}}</time>
+                    <div class="bc-writing-content">
+                        {{#if primary_tag}}
+                            <span class="bc-tag-label bc-tag-label--sm">{{primary_tag.name}}</span>
+                        {{/if}}
+                        <h2 class="bc-writing-title">{{title}}</h2>
+                        {{#if custom_excerpt}}
+                            <p class="bc-writing-excerpt">{{custom_excerpt}}</p>
+                        {{else if excerpt}}
+                            <p class="bc-writing-excerpt">{{excerpt}}</p>
+                        {{/if}}
+                        <span class="bc-writing-read">{{reading_time}}</span>
+                    </div>
+                </a>
+            {{/foreach}}
+        </div>
+
+        {{pagination}}
+
+    </div>
+</main>

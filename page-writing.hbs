@@ -1,0 +1,37 @@
+{{!< default}}
+
+<main class="bc-main">
+    <div class="bc-container bc-container--narrow">
+
+        <div class="bc-page-head bc-reveal">
+            <span class="bc-tag-label">{{t "The Writing"}}</span>
+            <h1 class="bc-page-title">{{t "Essays & field notes"}}</h1>
+            {{#if @site.description}}
+                <p class="bc-page-description">{{@site.description}}</p>
+            {{/if}}
+        </div>
+
+        <div class="bc-writing-list">
+            {{#get "posts" include="tags,authors" limit="100"}}
+                {{#foreach posts}}
+                    <a class="bc-writing-row bc-reveal" href="{{url}}">
+                        <time class="bc-writing-date" datetime="{{date format="YYYY-MM-DD"}}">{{date format="DD MMM YYYY"}}</time>
+                        <div class="bc-writing-content">
+                            {{#if primary_tag}}
+                                <span class="bc-tag-label bc-tag-label--sm">{{primary_tag.name}}</span>
+                            {{/if}}
+                            <h2 class="bc-writing-title">{{title}}</h2>
+                            {{#if custom_excerpt}}
+                                <p class="bc-writing-excerpt">{{custom_excerpt}}</p>
+                            {{else if excerpt}}
+                                <p class="bc-writing-excerpt">{{excerpt}}</p>
+                            {{/if}}
+                            <span class="bc-writing-read">{{reading_time}}</span>
+                        </div>
+                    </a>
+                {{/foreach}}
+            {{/get}}
+        </div>
+
+    </div>
+</main>

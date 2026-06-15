@@ -1,0 +1,84 @@
+{{!< default}}
+
+<main class="bc-main">
+    <div class="bc-container">
+
+        {{! Hero }}
+        <div class="bc-hero bc-reveal">
+            <h1 class="bc-hero-headline">{{#if @site.description}}{{@site.description}}{{else}}Notes on software, attention, and the slow craft of building things.{{/if}}</h1>
+            {{#if @custom.hero_subtitle}}
+                <p class="bc-hero-subtitle">{{@custom.hero_subtitle}}</p>
+            {{/if}}
+        </div>
+
+        {{! Featured post }}
+        {{#foreach posts limit="1"}}
+        <a class="bc-featured bc-reveal" href="{{url}}">
+            <div class="bc-featured-image">
+                {{#if feature_image}}
+                    <img
+                        srcset="{{img_url feature_image size="m"}} 720w,
+                                {{img_url feature_image size="l"}} 960w,
+                                {{img_url feature_image size="xl"}} 1200w"
+                        sizes="(max-width: 991px) 100vw, 55vw"
+                        src="{{img_url feature_image size="l"}}"
+                        alt="{{#if feature_image_alt}}{{feature_image_alt}}{{else}}{{title}}{{/if}}"
+                    >
+                {{else}}
+                    <div class="bc-image-placeholder"></div>
+                {{/if}}
+            </div>
+            <div class="bc-featured-content">
+                {{#if primary_tag}}
+                    <span class="bc-tag-label">{{primary_tag.name}}</span>
+                {{/if}}
+                <h2 class="bc-featured-title">{{title}}</h2>
+                {{#if custom_excerpt}}
+                    <p class="bc-featured-excerpt">{{custom_excerpt}}</p>
+                {{else if excerpt}}
+                    <p class="bc-featured-excerpt">{{excerpt}}</p>
+                {{/if}}
+                <div class="bc-post-meta">
+                    <span class="bc-post-meta-author">{{primary_author.name}}</span>
+                    <span class="bc-meta-dot"></span>
+                    <time datetime="{{date format="YYYY-MM-DD"}}">{{date format="DD MMM YYYY"}}</time>
+                    <span class="bc-meta-dot"></span>
+                    <span>{{reading_time}}</span>
+                </div>
+            </div>
+        </a>
+        {{/foreach}}
+
+        {{! Recent posts }}
+        <div class="bc-section-header bc-reveal">
+            <h2 class="bc-section-label">{{t "Recent"}}</h2>
+            <a class="bc-section-link" href="{{@site.url}}">{{t "All writing"}} &rarr;</a>
+        </div>
+
+        <div class="bc-grid bc-grid--3">
+            {{#foreach posts from="2" limit="3"}}
+                {{> "loop-grid"}}
+            {{/foreach}}
+        </div>
+
+        {{! Archive }}
+        <div class="bc-archive-header bc-reveal">
+            <h2 class="bc-section-label">{{t "From the archive"}}</h2>
+        </div>
+
+        <div class="bc-archive">
+            {{#foreach posts from="5"}}
+                <a class="bc-archive-row bc-reveal" href="{{url}}">
+                    {{#if primary_tag}}
+                        <span class="bc-tag-label bc-tag-label--sm">{{primary_tag.name}}</span>
+                    {{else}}
+                        <span class="bc-tag-label bc-tag-label--sm"></span>
+                    {{/if}}
+                    <h3 class="bc-archive-title">{{title}}</h3>
+                    <time class="bc-archive-date" datetime="{{date format="YYYY-MM-DD"}}">{{date format="DD MMM YYYY"}}</time>
+                </a>
+            {{/foreach}}
+        </div>
+
+    </div>
+</main>

@@ -1,0 +1,21 @@
+{{!< default}}
+
+{{#post}}
+<main class="bc-main">
+    <div class="bc-container">
+
+        <div class="bc-page-head bc-reveal">
+            <span class="bc-tag-label">{{t "Photographs"}}</span>
+            <h1 class="bc-page-title bc-page-title--large">{{title}}</h1>
+            {{#if custom_excerpt}}
+                <p class="bc-page-description">{{custom_excerpt}}</p>
+            {{/if}}
+        </div>
+
+        <div class="bc-masonry gh-content">
+            {{content}}
+        </div>
+
+    </div>
+</main>
+{{/post}}
