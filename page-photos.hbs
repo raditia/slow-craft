@@ -1,21 +1,25 @@
 {{!< default}}
 
 {{#post}}
-<main class="bc-main">
-    <div class="bc-container">
+<main class="bc-main bc-main--v2">
 
-        <div class="bc-page-head bc-reveal">
-            <span class="bc-tag-label">{{t "Photographs"}}</span>
-            <h1 class="bc-page-title bc-page-title--large">{{title}}</h1>
-            {{#if custom_excerpt}}
-                <p class="bc-page-description">{{custom_excerpt}}</p>
-            {{/if}}
+    <div class="bc-page-hero-dark">
+        <div class="bc-container">
+            <div class="bc-reveal">
+                <span class="bc-tag-label">{{t "Photographs"}}</span>
+                <h1 class="bc-page-hero-title">{{title}}</h1>
+                {{#if custom_excerpt}}
+                    <p class="bc-page-hero-desc">{{custom_excerpt}}</p>
+                {{/if}}
+            </div>
         </div>
+    </div>
 
+    <div class="bc-container" style="padding-top: 44px;">
         <div class="bc-masonry gh-content">
             {{content}}
         </div>
-
     </div>
+
 </main>
 {{/post}}

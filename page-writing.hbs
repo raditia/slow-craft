@@ -1,18 +1,20 @@
 {{!< default}}
 
-<main class="bc-main">
-    <div class="bc-container bc-container--narrow">
+<main class="bc-main bc-main--v2">
 
-        <div class="bc-page-head bc-reveal">
-            <span class="bc-tag-label">{{t "The Writing"}}</span>
-            <h1 class="bc-page-title">{{#if @custom.writing_page_title}}{{@custom.writing_page_title}}{{else}}{{t "Essays & field notes"}}{{/if}}</h1>
-            {{#if @custom.writing_page_subtitle}}
-                <p class="bc-page-description">{{@custom.writing_page_subtitle}}</p>
-            {{else if @site.description}}
-                <p class="bc-page-description">{{@site.description}}</p>
-            {{/if}}
+    <div class="bc-page-hero-dark">
+        <div class="bc-container bc-container--narrow">
+            <div class="bc-reveal">
+                <span class="bc-tag-label">{{t "The Writing"}}</span>
+                <h1 class="bc-page-hero-title">{{#if @custom.writing_page_title}}{{@custom.writing_page_title}}{{else}}{{t "Essays & field notes"}}{{/if}}</h1>
+                {{#if @custom.writing_page_subtitle}}
+                    <p class="bc-page-hero-desc">{{@custom.writing_page_subtitle}}</p>
+                {{/if}}
+            </div>
         </div>
+    </div>
 
+    <div class="bc-container bc-container--narrow">
         <div class="bc-writing-list">
             {{#get "posts" include="tags,authors" limit="100"}}
                 {{#foreach posts}}
@@ -34,6 +36,6 @@
                 {{/foreach}}
             {{/get}}
         </div>
-
     </div>
+
 </main>

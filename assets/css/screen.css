@@ -1458,3 +1458,384 @@ img {
         font-size: 22px;
     }
 }
+
+/* ============================================================
+   V2 — Dark hero strip
+   ============================================================ */
+.bc-main--v2 {
+    padding-bottom: 120px;
+}
+
+.bc-hero-dark {
+    background: var(--bc-text);
+    padding: 72px var(--bc-px) 80px;
+}
+
+.bc-hero-dark-inner {
+    max-width: var(--bc-max);
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: 1fr auto;
+    align-items: end;
+    gap: 40px;
+}
+
+.bc-hero-pill {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 28px;
+}
+
+.bc-hero-pill-text {
+    font-family: var(--bc-font-body);
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--bc-accent);
+}
+
+.bc-hero-dark-headline {
+    font-family: var(--bc-font-head);
+    font-weight: 600;
+    font-size: clamp(40px, 5.5vw, 80px);
+    line-height: 0.97;
+    letter-spacing: -0.045em;
+    color: var(--bc-white);
+    margin: 0;
+    text-wrap: balance;
+    max-width: 14ch;
+}
+
+.bc-hero-dark-right {
+    text-align: right;
+    padding-bottom: 4px;
+}
+
+.bc-hero-dark-subtitle {
+    font-family: var(--bc-font-body);
+    font-weight: 400;
+    font-size: 17px;
+    line-height: 1.6;
+    color: var(--bc-text-3);
+    max-width: 28ch;
+    margin: 0 0 24px;
+    text-align: left;
+}
+
+.bc-hero-cta {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    font-family: var(--bc-font-body);
+    font-size: 13px;
+    font-weight: 600;
+    letter-spacing: 0.02em;
+    color: var(--bc-white);
+    border: 1px solid rgba(247, 245, 240, 0.2);
+    border-radius: 8px;
+    padding: 12px 20px;
+    text-decoration: none;
+    transition: background 0.25s ease, border-color 0.25s ease;
+}
+
+.bc-hero-cta:hover {
+    background: rgba(176, 83, 43, 0.25);
+    border-color: var(--bc-accent);
+}
+
+@media (max-width: 767px) {
+    .bc-hero-dark-inner {
+        grid-template-columns: 1fr;
+        gap: 24px;
+    }
+
+    .bc-hero-dark-right {
+        text-align: left;
+    }
+}
+
+/* ============================================================
+   V2 — Featured card (bridges hero)
+   ============================================================ */
+.bc-featured-card {
+    display: grid;
+    grid-template-columns: 1.4fr 1fr;
+    border-radius: 16px;
+    overflow: hidden;
+    background: #FFFFFF;
+    box-shadow: 0 8px 48px -12px rgba(26, 24, 21, 0.18);
+    min-height: 440px;
+    margin-top: -48px;
+    margin-bottom: 0;
+    position: relative;
+    z-index: 2;
+    text-decoration: none;
+    transition: box-shadow 0.4s ease, transform 0.4s ease;
+}
+
+.bc-featured-card:hover {
+    box-shadow: 0 16px 64px -12px rgba(26, 24, 21, 0.26);
+    transform: translateY(-2px);
+}
+
+.bc-featured-card-image {
+    overflow: hidden;
+    position: relative;
+}
+
+.bc-featured-card-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.7s cubic-bezier(0.2, 0.7, 0.2, 1);
+}
+
+.bc-featured-card:hover .bc-featured-card-image img {
+    transform: scale(1.03);
+}
+
+.bc-featured-card-image .bc-image-placeholder {
+    height: 100%;
+    min-height: 440px;
+}
+
+.bc-featured-card-content {
+    padding: 48px 44px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    background: #FFFFFF;
+}
+
+.bc-featured-card-content .bc-tag-label {
+    margin-bottom: 16px;
+}
+
+.bc-featured-card-title {
+    font-family: var(--bc-font-head);
+    font-weight: 600;
+    font-size: clamp(24px, 2.6vw, 38px);
+    line-height: 1.06;
+    letter-spacing: -0.03em;
+    color: var(--bc-text);
+    margin: 0 0 16px;
+    text-wrap: balance;
+}
+
+.bc-featured-card-excerpt {
+    font-family: var(--bc-font-body);
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 1.6;
+    color: var(--bc-text-2);
+    margin: 0 0 28px;
+    max-width: 36ch;
+}
+
+.bc-featured-card-content .bc-post-meta {
+    margin-bottom: 28px;
+}
+
+.bc-featured-card-cta {
+    display: inline-flex;
+    align-items: center;
+    gap: 9px;
+    font-family: var(--bc-font-body);
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--bc-accent);
+}
+
+@media (max-width: 767px) {
+    .bc-featured-card {
+        grid-template-columns: 1fr;
+        min-height: auto;
+        margin-top: -24px;
+    }
+
+    .bc-featured-card-image {
+        height: 240px;
+    }
+
+    .bc-featured-card-content {
+        padding: 28px 24px 32px;
+    }
+}
+
+/* ============================================================
+   V2 — Elevated post cards
+   ============================================================ */
+.bc-card--elevated {
+    border-radius: 12px;
+    overflow: hidden;
+    background: #FFFFFF;
+    box-shadow: 0 2px 16px -6px rgba(26, 24, 21, 0.1);
+    transition: box-shadow 0.4s ease, transform 0.4s ease;
+}
+
+.bc-card--elevated:hover {
+    box-shadow: 0 10px 32px -10px rgba(26, 24, 21, 0.2);
+    transform: translateY(-3px);
+}
+
+.bc-card--elevated .bc-card-link {
+    display: block;
+}
+
+.bc-card--elevated .bc-card-image {
+    border-radius: 0;
+    margin-bottom: 0;
+    aspect-ratio: 16/10;
+}
+
+.bc-card--elevated .bc-card-image img {
+    transition: transform 0.7s cubic-bezier(0.2, 0.7, 0.2, 1);
+}
+
+.bc-card--elevated:hover .bc-card-image img {
+    transform: scale(1.05);
+}
+
+.bc-card-body {
+    padding: 24px 26px 26px;
+}
+
+.bc-card--elevated .bc-tag-label {
+    margin-bottom: 10px;
+}
+
+.bc-card--elevated .bc-card-title {
+    font-size: 20px;
+    margin: 0 0 10px;
+}
+
+.bc-card--elevated .bc-card-excerpt {
+    font-size: 14px;
+    margin: 0 0 16px;
+}
+
+/* ============================================================
+   V2 — Archive divider
+   ============================================================ */
+.bc-archive-divider {
+    display: flex;
+    align-items: center;
+    gap: 18px;
+    margin: 72px 0 0;
+}
+
+.bc-archive-divider-line {
+    flex: 1;
+    height: 1px;
+    background: var(--bc-border);
+}
+
+.bc-archive-divider-label {
+    font-family: var(--bc-font-body);
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--bc-accent);
+}
+
+/* ============================================================
+   V2 — Archive with thumbnails
+   ============================================================ */
+.bc-archive-row--thumb {
+    grid-template-columns: 56px 1fr auto;
+    gap: 20px;
+    align-items: center;
+    padding: 20px 0;
+}
+
+.bc-archive-thumb {
+    width: 56px;
+    height: 56px;
+    border-radius: 7px;
+    overflow: hidden;
+    flex-shrink: 0;
+    background: var(--bc-bg-muted);
+}
+
+.bc-archive-thumb img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.bc-archive-body .bc-tag-label {
+    margin-bottom: 5px;
+}
+
+.bc-archive-row--thumb .bc-archive-title {
+    font-size: 20px;
+}
+
+@media (max-width: 599px) {
+    .bc-archive-row--thumb {
+        grid-template-columns: 48px 1fr;
+        gap: 14px;
+    }
+
+    .bc-archive-row--thumb .bc-archive-date {
+        display: none;
+    }
+}
+
+/* ============================================================
+   V2 — Dark page hero (writing / photos / about)
+   ============================================================ */
+.bc-page-hero-dark {
+    background: var(--bc-text);
+    padding: 72px var(--bc-px) 80px;
+}
+
+.bc-page-hero-dark .bc-tag-label {
+    margin-bottom: 18px;
+}
+
+.bc-page-hero-title {
+    font-family: var(--bc-font-head);
+    font-weight: 600;
+    font-size: clamp(38px, 5.2vw, 68px);
+    line-height: 1;
+    letter-spacing: -0.04em;
+    color: var(--bc-white);
+    margin: 0;
+}
+
+.bc-page-hero-desc {
+    font-family: var(--bc-font-body);
+    font-weight: 400;
+    font-size: 19px;
+    line-height: 1.5;
+    color: var(--bc-text-3);
+    margin: 20px 0 0;
+    max-width: 54ch;
+}
+
+.bc-about-portrait--dark {
+    margin-bottom: 30px;
+}
+
+.bc-main--v2 .bc-writing-list {
+    margin-top: 0;
+    border-top: 1px solid var(--bc-border);
+}
+
+@media (max-width: 767px) {
+    .bc-main--v2 {
+        padding-bottom: 64px;
+    }
+
+    .bc-page-hero-dark {
+        padding: 48px var(--bc-px) 56px;
+    }
+
+    .bc-hero-dark {
+        padding: 48px var(--bc-px) 56px;
+    }
+}

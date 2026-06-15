@@ -1,18 +1,22 @@
 {{!< default}}
 
 {{#post}}
-<main class="bc-main">
+<main class="bc-main bc-main--v2">
 
     {{#match slug "about"}}
-        <div class="bc-container bc-container--about">
-            <div class="bc-about-head bc-reveal">
-                {{#if primary_author.profile_image}}
-                    <img class="bc-about-portrait" src="{{primary_author.profile_image}}" alt="{{primary_author.name}}">
-                {{/if}}
-                <span class="bc-tag-label">{{t "About"}}</span>
-                <h1 class="bc-about-title">{{title}}</h1>
+        <div class="bc-page-hero-dark">
+            <div class="bc-container bc-container--about">
+                <div class="bc-reveal">
+                    {{#if primary_author.profile_image}}
+                        <img class="bc-about-portrait bc-about-portrait--dark" src="{{primary_author.profile_image}}" alt="{{primary_author.name}}">
+                    {{/if}}
+                    <span class="bc-tag-label">{{t "About"}}</span>
+                    <h1 class="bc-page-hero-title">{{title}}</h1>
+                </div>
             </div>
-            <div class="bc-about-content gh-content bc-reveal">
+        </div>
+        <div class="bc-container bc-container--about">
+            <div class="bc-about-content gh-content bc-reveal" style="padding-top: 56px;">
                 {{content}}
             </div>
             <div class="bc-about-actions bc-reveal">

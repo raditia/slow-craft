@@ -1,4 +1,4 @@
-<article class="bc-card bc-reveal">
+<article class="bc-card bc-card--elevated bc-reveal">
     <a class="bc-card-link" href="{{url}}">
         <div class="bc-card-image">
             {{#if feature_image}}
@@ -13,19 +13,21 @@
                 <div class="bc-image-placeholder"></div>
             {{/if}}
         </div>
-        {{#if primary_tag}}
-            <span class="bc-tag-label bc-tag-label--sm">{{primary_tag.name}}</span>
-        {{/if}}
-        <h3 class="bc-card-title">{{title}}</h3>
-        {{#if custom_excerpt}}
-            <p class="bc-card-excerpt">{{custom_excerpt}}</p>
-        {{else if excerpt}}
-            <p class="bc-card-excerpt">{{excerpt}}</p>
-        {{/if}}
-        <div class="bc-card-meta">
-            <time datetime="{{date format="YYYY-MM-DD"}}">{{date format="DD MMM YYYY"}}</time>
-            <span class="bc-meta-mid">&middot;</span>
-            <span>{{reading_time}}</span>
+        <div class="bc-card-body">
+            {{#if primary_tag}}
+                <span class="bc-tag-label bc-tag-label--sm">{{primary_tag.name}}</span>
+            {{/if}}
+            <h3 class="bc-card-title">{{title}}</h3>
+            {{#if custom_excerpt}}
+                <p class="bc-card-excerpt">{{custom_excerpt}}</p>
+            {{else if excerpt}}
+                <p class="bc-card-excerpt">{{excerpt}}</p>
+            {{/if}}
+            <div class="bc-card-meta">
+                <time datetime="{{date format="YYYY-MM-DD"}}">{{date format="DD MMM YYYY"}}</time>
+                <span class="bc-meta-mid">&middot;</span>
+                <span>{{reading_time}}</span>
+            </div>
         </div>
     </a>
 </article>
