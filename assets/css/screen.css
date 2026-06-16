@@ -1771,6 +1771,66 @@ img {
     background: rgba(176, 83, 43, 0.08);
 }
 
+/* Book entry component (used in Now page HTML card) */
+.bc-book {
+    display: grid;
+    grid-template-columns: 54px 1fr;
+    gap: 20px;
+    align-items: start;
+    margin-bottom: 16px;
+}
+
+.bc-book-cover {
+    width: 54px;
+    height: 72px;
+    border-radius: 6px;
+    flex: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: #2E2B25;
+}
+
+.bc-book-cover-label {
+    font-family: var(--bc-font-head);
+    font-size: 10px;
+    font-weight: 600;
+    color: var(--bc-accent);
+    text-align: center;
+    padding: 4px;
+    line-height: 1.3;
+}
+
+.bc-book-title {
+    font-family: var(--bc-font-head);
+    font-size: 17px;
+    font-weight: 500;
+    color: var(--bc-text);
+    letter-spacing: -0.02em;
+    margin: 0 0 3px;
+}
+
+.bc-book-author {
+    font-family: var(--bc-font-body);
+    font-size: 13px;
+    color: var(--bc-text-4);
+    margin: 0 0 8px;
+}
+
+.bc-book-note {
+    font-family: var(--bc-font-body);
+    font-size: 15px;
+    line-height: 1.6;
+    color: var(--bc-text-2);
+    margin: 0;
+}
+
+.bc-book-list {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
 /* Now / TIL / Newsletter pages */
 .bc-page-title--now {
     font-size: clamp(32px, 4vw, 52px);
