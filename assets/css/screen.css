@@ -1061,8 +1061,8 @@ img {
 .bc-article-content {
     font-family: var(--bc-font-body);
     font-size: 19px;
-    line-height: 1.7;
-    color: var(--bc-text-2);
+    line-height: 1.75;
+    color: #2B2722;
 }
 
 .bc-article-content p {
@@ -1071,12 +1071,12 @@ img {
 
 .bc-article-content h2 {
     font-family: var(--bc-font-head);
-    font-size: 30px;
+    font-size: 32px;
     font-weight: 600;
-    letter-spacing: -0.025em;
+    letter-spacing: -0.03em;
     color: var(--bc-text);
-    margin: 48px 0 20px;
-    line-height: 1.15;
+    margin: 56px 0 22px;
+    line-height: 1.1;
 }
 
 .bc-article-content h3 {
@@ -1126,11 +1126,12 @@ img {
 }
 
 .bc-article-content code {
-    font-size: 0.875em;
-    background: var(--bc-bg-muted);
-    padding: 2px 6px;
-    border-radius: 4px;
-    font-family: 'SF Mono', 'Fira Code', monospace;
+    font-size: 0.84em;
+    background: #ECE7DC;
+    color: var(--bc-accent);
+    padding: 2px 8px;
+    border-radius: 6px;
+    font-family: 'SF Mono', 'Fira Code', ui-monospace, monospace;
 }
 
 .bc-article-content pre {
@@ -1436,6 +1437,283 @@ img {
 
 @media (max-width: 479px) {
     .bc-photos-grid { column-count: 1; }
+}
+
+/* ============================================================
+   About page (page-about.hbs)
+   ============================================================ */
+.bc-about-page {
+    max-width: 1080px;
+    margin: 0 auto;
+    padding: 0 var(--bc-px);
+}
+
+/* Top: portrait + intro */
+.bc-about-top {
+    display: grid;
+    grid-template-columns: auto 1fr;
+    gap: 52px;
+    align-items: end;
+    padding: 84px 0 64px;
+    border-bottom: 1px solid var(--bc-border);
+}
+
+.bc-about-portrait-rect {
+    width: 220px;
+    height: 280px;
+    border-radius: 12px;
+    object-fit: cover;
+    flex-shrink: 0;
+    display: block;
+}
+
+.bc-about-intro .bc-tag-label {
+    margin-bottom: 16px;
+}
+
+.bc-about-page-title {
+    font-family: var(--bc-font-head);
+    font-weight: 600;
+    font-size: clamp(32px, 4vw, 52px);
+    line-height: 1.04;
+    letter-spacing: -0.035em;
+    color: var(--bc-text);
+    margin: 0 0 20px;
+    text-wrap: balance;
+}
+
+.bc-about-tagline {
+    font-family: var(--bc-font-body);
+    font-size: 18px;
+    line-height: 1.6;
+    color: var(--bc-text-2);
+    margin: 0 0 32px;
+    max-width: 44ch;
+}
+
+.bc-about-actions {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    flex-wrap: wrap;
+}
+
+.bc-about-actions-social {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-left: 4px;
+}
+
+/* Facts grid */
+.bc-about-facts {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    border-top: 1px solid var(--bc-border);
+    border-bottom: 1px solid var(--bc-border);
+}
+
+.bc-about-fact {
+    padding: 36px 0;
+}
+
+.bc-about-fact:first-child {
+    padding-right: 36px;
+    border-right: 1px solid var(--bc-border);
+}
+
+.bc-about-fact--mid {
+    padding-left: 36px;
+    padding-right: 36px;
+    border-right: 1px solid var(--bc-border);
+}
+
+.bc-about-fact:last-child {
+    padding-left: 36px;
+}
+
+.bc-about-fact-label {
+    font-family: var(--bc-font-body);
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--bc-text-4);
+    margin-bottom: 14px;
+}
+
+.bc-about-fact-value {
+    font-family: var(--bc-font-head);
+    font-size: 22px;
+    font-weight: 500;
+    letter-spacing: -0.02em;
+    color: var(--bc-text);
+}
+
+/* Sections */
+.bc-about-section {
+    display: grid;
+    grid-template-columns: 200px 1fr;
+    gap: 56px;
+    padding: 56px 0;
+    border-bottom: 1px solid var(--bc-border);
+}
+
+.bc-about-section--last {
+    border-bottom: none;
+    padding-bottom: 20px;
+}
+
+.bc-about-section-label {
+    font-family: var(--bc-font-body);
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--bc-text-4);
+    padding-top: 5px;
+}
+
+/* What I do — content from Ghost editor */
+.bc-about-section-body {
+    font-family: var(--bc-font-body);
+    font-size: 18px;
+    line-height: 1.7;
+    color: #3A352E;
+}
+
+/* Skill cards — user adds via HTML card in Ghost editor */
+.bc-about-cards {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+}
+
+.bc-about-card {
+    padding: 22px 24px;
+    background: #FFFFFF;
+    border-radius: 10px;
+    border: 1px solid var(--bc-border);
+}
+
+.bc-about-card-title {
+    font-family: var(--bc-font-head);
+    font-size: 16px;
+    font-weight: 500;
+    color: var(--bc-text);
+    margin: 0 0 7px;
+}
+
+.bc-about-card-desc {
+    font-family: var(--bc-font-body);
+    font-size: 14px;
+    line-height: 1.55;
+    color: var(--bc-text-3);
+    margin: 0;
+}
+
+/* The name */
+.bc-about-name-text {
+    font-family: var(--bc-font-body);
+    font-size: 18px;
+    line-height: 1.7;
+    color: #3A352E;
+    margin: 0;
+    max-width: 58ch;
+}
+
+/* Currently into */
+.bc-about-currently-into {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    align-content: start;
+}
+
+.bc-about-interest {
+    font-family: var(--bc-font-body);
+    font-size: 14px;
+    font-weight: 500;
+    color: var(--bc-text);
+    background: #ECE7DC;
+    padding: 8px 16px;
+    border-radius: 999px;
+}
+
+/* Social row */
+.bc-about-social-row {
+    display: flex;
+    gap: 12px;
+    padding: 40px 0 80px;
+}
+
+.bc-about-social-row .bc-about-social-link {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 40px;
+    height: 40px;
+    border-radius: 10px;
+    border: 1px solid var(--bc-border);
+    color: var(--bc-text-2);
+    transition: border-color 0.25s, color 0.25s, background 0.25s;
+}
+
+.bc-about-social-row .bc-about-social-link:hover {
+    border-color: var(--bc-accent);
+    color: var(--bc-accent);
+    background: rgba(176,83,43,0.06);
+}
+
+.bc-about-social-row .bc-about-social-link svg {
+    width: 18px;
+    height: 18px;
+}
+
+@media (max-width: 767px) {
+    .bc-about-top {
+        grid-template-columns: 1fr;
+        gap: 28px;
+        padding: 48px 0 40px;
+    }
+
+    .bc-about-portrait-rect {
+        width: 120px;
+        height: 152px;
+    }
+
+    .bc-about-facts {
+        grid-template-columns: 1fr;
+    }
+
+    .bc-about-fact:first-child {
+        padding-right: 0;
+        border-right: none;
+        border-bottom: 1px solid var(--bc-border);
+    }
+
+    .bc-about-fact--mid {
+        padding-left: 0;
+        padding-right: 0;
+        border-left: none;
+        border-right: none;
+        border-top: none;
+        border-bottom: 1px solid var(--bc-border);
+    }
+
+    .bc-about-fact:last-child {
+        padding-left: 0;
+    }
+
+    .bc-about-section {
+        grid-template-columns: 1fr;
+        gap: 16px;
+        padding: 36px 0;
+    }
+
+    .bc-about-cards {
+        grid-template-columns: 1fr;
+    }
 }
 
 /* About social links */
@@ -1768,6 +2046,66 @@ img {
     border-color: var(--bc-accent);
     color: var(--bc-accent);
     background: rgba(176, 83, 43, 0.08);
+}
+
+/* Book entry component (used in Now page HTML card) */
+.bc-book {
+    display: grid;
+    grid-template-columns: 54px 1fr;
+    gap: 20px;
+    align-items: start;
+    margin-bottom: 16px;
+}
+
+.bc-book-cover {
+    width: 54px;
+    height: 72px;
+    border-radius: 6px;
+    flex: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: #2E2B25;
+}
+
+.bc-book-cover-label {
+    font-family: var(--bc-font-head);
+    font-size: 10px;
+    font-weight: 600;
+    color: var(--bc-accent);
+    text-align: center;
+    padding: 4px;
+    line-height: 1.3;
+}
+
+.bc-book-title {
+    font-family: var(--bc-font-head);
+    font-size: 17px;
+    font-weight: 500;
+    color: var(--bc-text);
+    letter-spacing: -0.02em;
+    margin: 0 0 3px;
+}
+
+.bc-book-author {
+    font-family: var(--bc-font-body);
+    font-size: 13px;
+    color: var(--bc-text-4);
+    margin: 0 0 8px;
+}
+
+.bc-book-note {
+    font-family: var(--bc-font-body);
+    font-size: 15px;
+    line-height: 1.6;
+    color: var(--bc-text-2);
+    margin: 0;
+}
+
+.bc-book-list {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
 }
 
 /* Now / TIL / Newsletter pages */
