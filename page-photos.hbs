@@ -39,7 +39,7 @@
     var UNSPLASH_USER = window.UNSPLASH_USERNAME || 'raditia';
     var PER_PAGE      = window.UNSPLASH_PER_PAGE || 30;
     var CACHE_KEY     = 'bc_photos_cache';
-    var CACHE_TTL     = 30 * 60 * 1000; // 30 min — shorter so new uploads appear faster
+    var CACHE_TTL     = 60 * 60 * 1000; // 1 hour
 
     var grid    = document.getElementById('bc-photos-grid');
     var loading = document.getElementById('bc-photos-loading');
