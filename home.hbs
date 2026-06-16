@@ -6,29 +6,28 @@
         {{! Hero }}
         <div class="bc-hero bc-reveal">
             <h1 class="bc-hero-headline" id="bc-hero-headline">{{#if @site.description}}{{@site.description}}{{else}}Notes on software, attention, and the slow craft of building things.{{/if}}</h1>
-            <p class="bc-hero-subtitle" id="bc-hero-subtitle">{{#if @custom.hero_subtitle}}{{@custom.hero_subtitle}}{{else}}Written by someone who is, quite often, productively bored.{{/if}}</p>
+            <p class="bc-hero-subtitle" id="bc-hero-subtitle">Written by someone who is, quite often, productively bored.</p>
         </div>
 
-        {{#if @custom.hero_headlines}}
         <script>
         (function () {
             function pickRandom(text) {
                 var lines = text.split('\n').map(function(l){ return l.trim(); }).filter(Boolean);
-                return lines[Math.floor(Math.random() * lines.length)];
+                return lines.length ? lines[Math.floor(Math.random() * lines.length)] : null;
             }
             var headlines = {{json @custom.hero_headlines}};
             var subtitles = {{json @custom.hero_subtitles}};
-            if (headlines) {
+            var picked;
+            if (headlines && (picked = pickRandom(headlines))) {
                 var h = document.getElementById('bc-hero-headline');
-                if (h) h.textContent = pickRandom(headlines);
+                if (h) h.textContent = picked;
             }
-            if (subtitles) {
+            if (subtitles && (picked = pickRandom(subtitles))) {
                 var s = document.getElementById('bc-hero-subtitle');
-                if (s) s.textContent = pickRandom(subtitles);
+                if (s) s.textContent = picked;
             }
         })();
         </script>
-        {{/if}}
 
         {{! Featured post }}
         {{#foreach posts limit="1"}}
@@ -71,7 +70,7 @@
         {{! Recent posts }}
         <div class="bc-section-header bc-reveal">
             <h2 class="bc-section-label">{{t "Recent"}}</h2>
-            <a class="bc-section-link" href="{{@site.url}}">{{t "All writing"}} &rarr;</a>
+            <a class="bc-section-link" href="{{#if @custom.writing_page_url}}{{@custom.writing_page_url}}{{else}}{{@site.url}}/writing{{/if}}">{{t "All writing"}} &rarr;</a>
         </div>
 
         <div class="bc-grid bc-grid--3">
