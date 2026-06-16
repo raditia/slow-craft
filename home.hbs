@@ -41,46 +41,48 @@
 
     <div class="bc-container">
 
-        {{! Featured post — bridges hero }}
-        {{#foreach posts limit="1" filter="tag:-til"}}
-        <a class="bc-featured-card bc-reveal" href="{{url}}">
-            <div class="bc-featured-card-image">
-                {{#if feature_image}}
-                    <img
-                        srcset="{{img_url feature_image size="m"}} 720w,
-                                {{img_url feature_image size="l"}} 960w,
-                                {{img_url feature_image size="xl"}} 1200w"
-                        sizes="(max-width: 991px) 100vw, 58vw"
-                        src="{{img_url feature_image size="l"}}"
-                        alt="{{#if feature_image_alt}}{{feature_image_alt}}{{else}}{{title}}{{/if}}"
-                    >
-                {{else}}
-                    <div class="bc-image-placeholder"></div>
-                {{/if}}
-            </div>
-            <div class="bc-featured-card-content">
-                {{#if primary_tag}}
-                    <span class="bc-tag-label">{{primary_tag.name}} &nbsp;·&nbsp; {{t "Featured"}}</span>
-                {{else}}
-                    <span class="bc-tag-label">{{t "Featured"}}</span>
-                {{/if}}
-                <h2 class="bc-featured-card-title">{{title}}</h2>
-                {{#if custom_excerpt}}
-                    <p class="bc-featured-card-excerpt">{{custom_excerpt}}</p>
-                {{else if excerpt}}
-                    <p class="bc-featured-card-excerpt">{{excerpt}}</p>
-                {{/if}}
-                <div class="bc-post-meta">
-                    <span class="bc-post-meta-author">{{primary_author.name}}</span>
-                    <span class="bc-meta-dot"></span>
-                    <time datetime="{{date format="YYYY-MM-DD"}}">{{date format="DD MMM YYYY"}}</time>
-                    <span class="bc-meta-dot"></span>
-                    <span>{{reading_time}}</span>
+        {{! Featured post — use #get to properly filter TIL }}
+        {{#get "posts" filter="tag:-til" limit="1" include="authors,tags"}}
+            {{#foreach posts}}
+            <a class="bc-featured-card bc-reveal" href="{{url}}">
+                <div class="bc-featured-card-image">
+                    {{#if feature_image}}
+                        <img
+                            srcset="{{img_url feature_image size="m"}} 720w,
+                                    {{img_url feature_image size="l"}} 960w,
+                                    {{img_url feature_image size="xl"}} 1200w"
+                            sizes="(max-width: 991px) 100vw, 58vw"
+                            src="{{img_url feature_image size="l"}}"
+                            alt="{{#if feature_image_alt}}{{feature_image_alt}}{{else}}{{title}}{{/if}}"
+                        >
+                    {{else}}
+                        <div class="bc-image-placeholder"></div>
+                    {{/if}}
                 </div>
-                <span class="bc-featured-card-cta">{{t "Read article"}} &rarr;</span>
-            </div>
-        </a>
-        {{/foreach}}
+                <div class="bc-featured-card-content">
+                    {{#if primary_tag}}
+                        <span class="bc-tag-label">{{primary_tag.name}} &nbsp;·&nbsp; {{t "Featured"}}</span>
+                    {{else}}
+                        <span class="bc-tag-label">{{t "Featured"}}</span>
+                    {{/if}}
+                    <h2 class="bc-featured-card-title">{{title}}</h2>
+                    {{#if custom_excerpt}}
+                        <p class="bc-featured-card-excerpt">{{custom_excerpt}}</p>
+                    {{else if excerpt}}
+                        <p class="bc-featured-card-excerpt">{{excerpt}}</p>
+                    {{/if}}
+                    <div class="bc-post-meta">
+                        <span class="bc-post-meta-author">{{primary_author.name}}</span>
+                        <span class="bc-meta-dot"></span>
+                        <time datetime="{{date format="YYYY-MM-DD"}}">{{date format="DD MMM YYYY"}}</time>
+                        <span class="bc-meta-dot"></span>
+                        <span>{{reading_time}}</span>
+                    </div>
+                    <span class="bc-featured-card-cta">{{t "Read article"}} &rarr;</span>
+                </div>
+            </a>
+            {{/foreach}}
+        {{/get}}
 
         {{! Recent posts }}
         <div class="bc-section-header bc-reveal">
@@ -89,9 +91,11 @@
         </div>
 
         <div class="bc-grid bc-grid--3">
-            {{#foreach posts from="2" limit="3" filter="tag:-til"}}
-                {{> "loop-grid"}}
-            {{/foreach}}
+            {{#get "posts" filter="tag:-til" limit="4" include="authors,tags"}}
+                {{#foreach posts from="2"}}
+                    {{> "loop-grid"}}
+                {{/foreach}}
+            {{/get}}
         </div>
 
         {{! Newsletter strip }}
@@ -122,24 +126,26 @@
 
         {{! Archive with thumbnails }}
         <div class="bc-archive">
-            {{#foreach posts from="5" filter="tag:-til"}}
-                <a class="bc-archive-row bc-archive-row--thumb bc-reveal" href="{{url}}">
-                    <div class="bc-archive-thumb">
-                        {{#if feature_image}}
-                            <img src="{{img_url feature_image size="xs"}}" alt="{{title}}">
-                        {{else}}
-                            <div class="bc-image-placeholder"></div>
-                        {{/if}}
-                    </div>
-                    <div class="bc-archive-body">
-                        {{#if primary_tag}}
-                            <span class="bc-tag-label bc-tag-label--sm">{{primary_tag.name}}</span>
-                        {{/if}}
-                        <h3 class="bc-archive-title">{{title}}</h3>
-                    </div>
-                    <time class="bc-archive-date" datetime="{{date format="YYYY-MM-DD"}}">{{date format="DD MMM YYYY"}}</time>
-                </a>
-            {{/foreach}}
+            {{#get "posts" filter="tag:-til" limit="12" include="tags"}}
+                {{#foreach posts from="5"}}
+                    <a class="bc-archive-row bc-archive-row--thumb bc-reveal" href="{{url}}">
+                        <div class="bc-archive-thumb">
+                            {{#if feature_image}}
+                                <img src="{{img_url feature_image size="xs"}}" alt="{{title}}">
+                            {{else}}
+                                <div class="bc-image-placeholder"></div>
+                            {{/if}}
+                        </div>
+                        <div class="bc-archive-body">
+                            {{#if primary_tag}}
+                                <span class="bc-tag-label bc-tag-label--sm">{{primary_tag.name}}</span>
+                            {{/if}}
+                            <h3 class="bc-archive-title">{{title}}</h3>
+                        </div>
+                        <time class="bc-archive-date" datetime="{{date format="YYYY-MM-DD"}}">{{date format="DD MMM YYYY"}}</time>
+                    </a>
+                {{/foreach}}
+            {{/get}}
         </div>
 
     </div>
