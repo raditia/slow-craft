@@ -79,6 +79,25 @@
             {{/foreach}}
         </div>
 
+        {{! Newsletter strip }}
+        {{#if @site.members_enabled}}
+        <div class="bc-newsletter-band bc-reveal">
+            <div class="bc-newsletter-band-left">
+                <div class="bc-newsletter-band-label">
+                    <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#B0532B" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2" y="4" width="20" height="16" rx="2"></rect><path d="M2 7l10 7 10-7"></path></svg>
+                    <span>{{t "Newsletter"}}</span>
+                </div>
+                <h2 class="bc-newsletter-band-title">{{t "A slow letter, once a month."}}</h2>
+                <p class="bc-newsletter-band-desc">{{t "What I've been building, reading, and thinking about. No cadence pressure — only when there's something worth saying."}}</p>
+            </div>
+            <div class="bc-newsletter-band-right">
+                <input type="email" placeholder="{{t "your@email.com"}}" class="bc-newsletter-band-input" data-members-email>
+                <button class="bc-newsletter-band-btn" data-members-submit>{{t "Subscribe"}} &rarr;</button>
+                <span class="bc-newsletter-band-note">{{t "No spam. Unsubscribe whenever."}}</span>
+            </div>
+        </div>
+        {{/if}}
+
         {{! Archive }}
         <div class="bc-archive-header bc-reveal">
             <h2 class="bc-section-label">{{t "From the archive"}}</h2>
