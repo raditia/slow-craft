@@ -12,7 +12,7 @@
         </div>
 
         <div class="bc-writing-list">
-            {{#foreach posts}}
+            {{#foreach posts filter="tag:-til"}}
                 <a class="bc-writing-row bc-reveal" href="{{url}}">
                     <time class="bc-writing-date" datetime="{{date format="YYYY-MM-DD"}}">{{date format="DD MMM YYYY"}}</time>
                     <div class="bc-writing-content">

@@ -23,7 +23,7 @@
         </div>
 
         <div class="bc-writing-list" id="bc-writing-list">
-            {{#get "posts" include="tags,authors" limit="100"}}
+            {{#get "posts" filter="tag:-til" include="tags,authors" limit="100"}}
                 {{#foreach posts}}
                     <a class="bc-writing-row bc-reveal" href="{{url}}" data-tags="{{#foreach tags}}{{slug}} {{/foreach}}">
                         <time class="bc-writing-date" datetime="{{date format="YYYY-MM-DD"}}">{{date format="DD MMM YYYY"}}</time>

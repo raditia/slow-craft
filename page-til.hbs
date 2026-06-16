@@ -26,12 +26,7 @@
                             </div>
                             <div class="bc-til-body">
                                 <h3 class="bc-til-title">{{title}}</h3>
-                                {{#if custom_excerpt}}
-                                    <p class="bc-til-excerpt">{{custom_excerpt}}</p>
-                                {{else if excerpt}}
-                                    <p class="bc-til-excerpt">{{excerpt}}</p>
-                                {{/if}}
-                                <a class="bc-til-read" href="{{url}}">{{t "Read more"}} &rarr;</a>
+                                <div class="bc-til-content gh-content">{{content}}</div>
                             </div>
                         </div>
                     {{/foreach}}
