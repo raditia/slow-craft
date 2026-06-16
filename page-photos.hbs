@@ -127,38 +127,29 @@
         }, 50);
     }
 
-    function getCache() {
-        try {
-            var raw = localStorage.getItem(CACHE_KEY);
-            if (!raw) return null;
-            var cached = JSON.parse(raw);
-            if (Date.now() - cached.ts > CACHE_TTL) return null;
-            return cached.photos;
-        } catch (e) {
-            return null;
-        }
+    function readRaw() {
+        try { return JSON.parse(localStorage.getItem(CACHE_KEY)); } catch (e) { return null; }
+    }
+
+    function isFresh(raw) {
+        return raw && typeof raw.ts === 'number' && (Date.now() - raw.ts < CACHE_TTL);
     }
 
     function setCache(photos) {
         try {
             localStorage.setItem(CACHE_KEY, JSON.stringify({ ts: Date.now(), photos: photos }));
-        } catch (e) {
-            // localStorage full or blocked — silently skip
-        }
+        } catch (e) {}
     }
 
-    // Serve from cache if fresh
-    var cached = getCache();
-    if (cached) {
-        try {
-            var raw = localStorage.getItem(CACHE_KEY);
-            var ts  = raw ? JSON.parse(raw).ts : Date.now();
-        } catch (e) { var ts = Date.now(); }
-        renderPhotos(cached, ts);
+    var raw = readRaw();
+
+    // Serve fresh cache immediately
+    if (isFresh(raw)) {
+        renderPhotos(raw.photos, raw.ts);
         return;
     }
 
-    // Fetch from Unsplash
+    // Cache expired or missing — fetch fresh, fall back to stale on error
     fetch('https://api.unsplash.com/users/' + UNSPLASH_USER + '/photos?per_page=' + PER_PAGE + '&order_by=latest&client_id=' + UNSPLASH_KEY)
         .then(function (res) {
             if (res.status === 403) throw new Error('rate_limited');
@@ -166,11 +157,15 @@
             return res.json();
         })
         .then(function (photos) {
-            var ts = Date.now();
             setCache(photos);
-            renderPhotos(photos, ts);
+            renderPhotos(photos, Date.now());
         })
         .catch(function (err) {
+            // Fallback: serve stale cache if available
+            if (raw && raw.photos && raw.photos.length) {
+                renderPhotos(raw.photos, raw.ts);
+                return;
+            }
             loading.style.display = 'none';
             if (err.message === 'rate_limited') {
                 errorEl.innerHTML = '<p>Photos are taking a break. <a href="https://unsplash.com/@' + UNSPLASH_USER + '" target="_blank" rel="noopener">View on Unsplash</a> in the meantime.</p>';
