@@ -58,15 +58,13 @@
             {{/if}}
         </div>
 
-        {{! What I do — from page content }}
-        {{#if content}}
+        {{! What I do — from page content (add HTML card in Ghost editor) }}
         <div class="bc-about-section bc-reveal">
             <div class="bc-about-section-label">{{t "What I do"}}</div>
             <div class="bc-about-section-body">
                 {{content}}
             </div>
         </div>
-        {{/if}}
 
         {{! The name }}
         {{#if @custom.about_name_explanation}}
