@@ -1771,6 +1771,10 @@ img {
 }
 
 /* Now / TIL / Newsletter pages */
+.bc-page-title--now {
+    font-size: clamp(32px, 4vw, 52px);
+}
+
 .bc-now-updated {
     font-family: var(--bc-font-body);
     font-size: 15px;
