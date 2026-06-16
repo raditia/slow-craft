@@ -12,6 +12,11 @@
             {{/if}}
         </div>
 
+        <div class="bc-photos-meta" id="bc-photos-meta" style="display:none">
+            <span class="bc-photos-count" id="bc-photos-count"></span>
+            <span class="bc-photos-updated">Updated <time id="bc-photos-updated"></time></span>
+        </div>
+
         {{! JS-powered masonry — auto-syncs with Unsplash }}
         <div class="bc-photos-grid" id="bc-photos-grid" aria-label="Photo gallery">
             <div class="bc-photos-loading" id="bc-photos-loading">
@@ -60,7 +65,27 @@
         });
     }, { rootMargin: '200px 0px' });
 
-    function renderPhotos(photos) {
+    function showMeta(photos, ts) {
+        var metaEl   = document.getElementById('bc-photos-meta');
+        var countEl  = document.getElementById('bc-photos-count');
+        var timeEl   = document.getElementById('bc-photos-updated');
+        var date     = new Date(ts);
+        var now      = new Date();
+        var diffMin  = Math.floor((now - date) / 60000);
+        var timeStr;
+
+        if (diffMin < 1)        timeStr = 'just now';
+        else if (diffMin < 60)  timeStr = diffMin + ' min ago';
+        else if (diffMin < 1440) timeStr = Math.floor(diffMin / 60) + 'h ago';
+        else                    timeStr = date.toLocaleDateString(undefined, { day: 'numeric', month: 'short', year: 'numeric' });
+
+        countEl.textContent = photos.length + ' photo' + (photos.length !== 1 ? 's' : '');
+        timeEl.setAttribute('datetime', date.toISOString());
+        timeEl.textContent = timeStr;
+        metaEl.style.display = 'flex';
+    }
+
+    function renderPhotos(photos, ts) {
         loading.style.display = 'none';
 
         if (!photos.length) {
@@ -68,6 +93,8 @@
             errorEl.style.display = 'block';
             return;
         }
+
+        showMeta(photos, ts || Date.now());
 
         photos.forEach(function (photo) {
             var item = document.createElement('div');
@@ -123,7 +150,11 @@
     // Serve from cache if fresh
     var cached = getCache();
     if (cached) {
-        renderPhotos(cached);
+        try {
+            var raw = localStorage.getItem(CACHE_KEY);
+            var ts  = raw ? JSON.parse(raw).ts : Date.now();
+        } catch (e) { var ts = Date.now(); }
+        renderPhotos(cached, ts);
         return;
     }
 
@@ -135,8 +166,9 @@
             return res.json();
         })
         .then(function (photos) {
+            var ts = Date.now();
             setCache(photos);
-            renderPhotos(photos);
+            renderPhotos(photos, ts);
         })
         .catch(function (err) {
             loading.style.display = 'none';

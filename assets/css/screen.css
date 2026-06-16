@@ -1342,6 +1342,27 @@ img {
 /* ============================================================
    Photos — JS masonry grid
    ============================================================ */
+.bc-photos-meta {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    margin-bottom: 28px;
+    font-family: var(--bc-font-body);
+    font-size: 13px;
+    color: var(--bc-text-4);
+}
+
+.bc-photos-count {
+    font-weight: 600;
+    color: var(--bc-text-2);
+}
+
+.bc-photos-updated::before {
+    content: '·';
+    margin-right: 16px;
+    color: var(--bc-border);
+}
+
 .bc-photos-grid {
     column-count: 3;
     column-gap: 22px;
