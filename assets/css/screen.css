@@ -1061,8 +1061,8 @@ img {
 .bc-article-content {
     font-family: var(--bc-font-body);
     font-size: 19px;
-    line-height: 1.7;
-    color: var(--bc-text-2);
+    line-height: 1.75;
+    color: #2B2722;
 }
 
 .bc-article-content p {
@@ -1071,12 +1071,12 @@ img {
 
 .bc-article-content h2 {
     font-family: var(--bc-font-head);
-    font-size: 30px;
+    font-size: 32px;
     font-weight: 600;
-    letter-spacing: -0.025em;
+    letter-spacing: -0.03em;
     color: var(--bc-text);
-    margin: 48px 0 20px;
-    line-height: 1.15;
+    margin: 56px 0 22px;
+    line-height: 1.1;
 }
 
 .bc-article-content h3 {
@@ -1126,11 +1126,12 @@ img {
 }
 
 .bc-article-content code {
-    font-size: 0.875em;
-    background: var(--bc-bg-muted);
-    padding: 2px 6px;
-    border-radius: 4px;
-    font-family: 'SF Mono', 'Fira Code', monospace;
+    font-size: 0.84em;
+    background: #ECE7DC;
+    color: var(--bc-accent);
+    padding: 2px 8px;
+    border-radius: 6px;
+    font-family: 'SF Mono', 'Fira Code', ui-monospace, monospace;
 }
 
 .bc-article-content pre {
