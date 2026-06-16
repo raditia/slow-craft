@@ -12,26 +12,26 @@
         </div>
 
         <div class="bc-writing-list">
-            {{#foreach posts filter="tag:-til"}}
-                <a class="bc-writing-row bc-reveal" href="{{url}}">
-                    <time class="bc-writing-date" datetime="{{date format="YYYY-MM-DD"}}">{{date format="DD MMM YYYY"}}</time>
-                    <div class="bc-writing-content">
-                        {{#if primary_tag}}
-                            <span class="bc-tag-label bc-tag-label--sm">{{primary_tag.name}}</span>
-                        {{/if}}
-                        <h2 class="bc-writing-title">{{title}}</h2>
-                        {{#if custom_excerpt}}
-                            <p class="bc-writing-excerpt">{{custom_excerpt}}</p>
-                        {{else if excerpt}}
-                            <p class="bc-writing-excerpt">{{excerpt}}</p>
-                        {{/if}}
-                        <span class="bc-writing-read">{{reading_time}}</span>
-                    </div>
-                </a>
-            {{/foreach}}
+            {{#get "posts" filter="tag:-til" limit="100" include="tags,authors"}}
+                {{#foreach posts}}
+                    <a class="bc-writing-row bc-reveal" href="{{url}}">
+                        <time class="bc-writing-date" datetime="{{date format="YYYY-MM-DD"}}">{{date format="DD MMM YYYY"}}</time>
+                        <div class="bc-writing-content">
+                            {{#if primary_tag}}
+                                <span class="bc-tag-label bc-tag-label--sm">{{primary_tag.name}}</span>
+                            {{/if}}
+                            <h2 class="bc-writing-title">{{title}}</h2>
+                            {{#if custom_excerpt}}
+                                <p class="bc-writing-excerpt">{{custom_excerpt}}</p>
+                            {{else if excerpt}}
+                                <p class="bc-writing-excerpt">{{excerpt}}</p>
+                            {{/if}}
+                            <span class="bc-writing-read">{{reading_time}}</span>
+                        </div>
+                    </a>
+                {{/foreach}}
+            {{/get}}
         </div>
-
-        {{pagination}}
 
     </div>
 </main>
