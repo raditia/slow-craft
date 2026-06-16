@@ -1,21 +1,18 @@
 {{!< default}}
 
 {{#post}}
-<main class="bc-main bc-main--v2">
-
-    <div class="bc-page-hero-dark">
-        <div class="bc-container bc-container--narrow" style="max-width:820px">
-            <div class="bc-reveal">
-                <span class="bc-tag-label">{{t "TIL"}}</span>
-                <h1 class="bc-page-hero-title">{{title}}</h1>
-                {{#if custom_excerpt}}
-                    <p class="bc-page-hero-desc">{{custom_excerpt}}</p>
-                {{/if}}
-            </div>
-        </div>
-    </div>
+<main class="bc-main">
 
     <div class="bc-til-container">
+
+        <div class="bc-page-head bc-reveal">
+            <span class="bc-tag-label">{{t "TIL"}}</span>
+            <h1 class="bc-page-title">{{title}}</h1>
+            {{#if custom_excerpt}}
+                <p class="bc-page-description">{{custom_excerpt}}</p>
+            {{/if}}
+        </div>
+
         {{#get "posts" filter="tag:til" include="tags,authors" limit="100" order="published_at desc"}}
             {{#if posts}}
                 <div class="bc-til-list">
@@ -29,12 +26,7 @@
                             </div>
                             <div class="bc-til-body">
                                 <h3 class="bc-til-title">{{title}}</h3>
-                                {{#if custom_excerpt}}
-                                    <p class="bc-til-excerpt">{{custom_excerpt}}</p>
-                                {{else if excerpt}}
-                                    <p class="bc-til-excerpt">{{excerpt}}</p>
-                                {{/if}}
-                                <a class="bc-til-read" href="{{url}}">{{t "Read more"}} &rarr;</a>
+                                <div class="bc-til-content gh-content">{{content}}</div>
                             </div>
                         </div>
                     {{/foreach}}
@@ -43,6 +35,7 @@
                 <p class="bc-til-empty">{{t "No entries yet. Tag a post with"}} <code>til</code> {{t "to have it appear here."}}</p>
             {{/if}}
         {{/get}}
+
     </div>
 
 </main>

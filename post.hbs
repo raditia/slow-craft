@@ -7,7 +7,11 @@
         <div class="bc-container bc-container--article">
 
             <div class="bc-article-back">
-                <a class="bc-back-link" href="javascript:history.back()">&larr; {{t "All writing"}}</a>
+                {{#has tag="til"}}
+                    <a class="bc-back-link" href="/til">&larr; {{t "Today I Learned"}}</a>
+                {{else}}
+                    <a class="bc-back-link" href="javascript:history.back()">&larr; {{t "All writing"}}</a>
+                {{/has}}
             </div>
 
             <header class="bc-article-header">
