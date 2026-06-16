@@ -1,0 +1,42 @@
+{{!< default}}
+
+{{#post}}
+<main class="bc-main">
+
+    <div class="bc-til-container">
+
+        <div class="bc-page-head bc-reveal">
+            <span class="bc-tag-label">{{t "TIL"}}</span>
+            <h1 class="bc-page-title">{{title}}</h1>
+            {{#if custom_excerpt}}
+                <p class="bc-page-description">{{custom_excerpt}}</p>
+            {{/if}}
+        </div>
+
+        {{#get "posts" filter="tag:til" include="tags,authors" limit="100" order="published_at desc"}}
+            {{#if posts}}
+                <div class="bc-til-list">
+                    {{#foreach posts}}
+                        <div class="bc-til-row bc-reveal">
+                            <div class="bc-til-meta">
+                                <time class="bc-til-date" datetime="{{date format="YYYY-MM-DD"}}">{{date format="DD MMM YYYY"}}</time>
+                                {{#if primary_tag}}
+                                    <span class="bc-til-tag">{{primary_tag.name}}</span>
+                                {{/if}}
+                            </div>
+                            <div class="bc-til-body">
+                                <h3 class="bc-til-title">{{title}}</h3>
+                                <div class="bc-til-content gh-content">{{content}}</div>
+                            </div>
+                        </div>
+                    {{/foreach}}
+                </div>
+            {{else}}
+                <p class="bc-til-empty">{{t "No entries yet. Tag a post with"}} <code>til</code> {{t "to have it appear here."}}</p>
+            {{/if}}
+        {{/get}}
+
+    </div>
+
+</main>
+{{/post}}

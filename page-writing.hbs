@@ -16,7 +16,7 @@
 
     <div class="bc-container bc-container--narrow">
         <div class="bc-writing-list">
-            {{#get "posts" include="tags,authors" limit="100"}}
+            {{#get "posts" filter="tag:-til" include="tags,authors" limit="100"}}
                 {{#foreach posts}}
                     <a class="bc-writing-row bc-reveal" href="{{url}}">
                         <time class="bc-writing-date" datetime="{{date format="YYYY-MM-DD"}}">{{date format="DD MMM YYYY"}}</time>

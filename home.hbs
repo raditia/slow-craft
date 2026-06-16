@@ -23,7 +23,7 @@
 
     {{! Featured post — bridges hero }}
     <div class="bc-container">
-        {{#foreach posts limit="1"}}
+        {{#foreach posts limit="1" filter="tag:-til"}}
         <a class="bc-featured-card bc-reveal" href="{{url}}">
             <div class="bc-featured-card-image">
                 {{#if feature_image}}
@@ -70,7 +70,7 @@
         </div>
 
         <div class="bc-grid bc-grid--3">
-            {{#foreach posts from="2" limit="3"}}
+            {{#foreach posts from="2" limit="3" filter="tag:-til"}}
                 {{> "loop-grid"}}
             {{/foreach}}
         </div>
@@ -84,7 +84,7 @@
 
         {{! Archive with thumbnails }}
         <div class="bc-archive">
-            {{#foreach posts from="5"}}
+            {{#foreach posts from="5" filter="tag:-til"}}
                 <a class="bc-archive-row bc-archive-row--thumb bc-reveal" href="{{url}}">
                     <div class="bc-archive-thumb">
                         {{#if feature_image}}
