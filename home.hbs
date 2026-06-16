@@ -12,7 +12,7 @@
         <script>
         (function () {
             function pickRandom(text) {
-                var lines = text.split('\n').map(function(l){ return l.trim(); }).filter(Boolean);
+                var lines = text.split('|').map(function(l){ return l.trim(); }).filter(Boolean);
                 return lines.length ? lines[Math.floor(Math.random() * lines.length)] : null;
             }
             var headlines = {{json @custom.hero_headlines}};

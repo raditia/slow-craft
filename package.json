@@ -1,7 +1,7 @@
 {
     "name": "the-bored-coder",
     "description": "The Bored Coder — a personal Ghost theme",
-    "version": "3.0.4",
+    "version": "3.0.5",
     "private": true,
     "engines": {
         "ghost": ">=5.0.0"
@@ -44,12 +44,12 @@
         "custom": {
             "hero_headlines": {
                 "type": "text",
-                "default": "A coder writing through the stuff they don't cover in standup.\nThe codebase is clean. The rest, I'm still refactoring.\nSeven years in tech. Still figuring out the basics.\nI write code for a living and words to make sense of it.\nBuilt software. Got bored. Started writing.",
+                "default": "A coder writing through the stuff they don't cover in standup. | The codebase is clean. The rest, I'm still refactoring. | Seven years in tech. Still figuring out the basics. | Built software. Got bored. Started writing.",
                 "group": "homepage"
             },
             "hero_subtitles": {
                 "type": "text",
-                "default": "Written by someone who is, quite often, productively bored.\nUnreviewed thoughts. Merge at your own risk.\nNo stack traces. Just feelings.\nWritten in the gaps between deploys.\nFor anyone who's felt something's off but couldn't put it in a ticket.",
+                "default": "Written by someone who is, quite often, productively bored. | Unreviewed thoughts. Merge at your own risk. | No stack traces. Just feelings. | Written in the gaps between deploys.",
                 "group": "homepage"
             },
             "writing_page_url": {
