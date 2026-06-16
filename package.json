@@ -1,7 +1,7 @@
 {
     "name": "the-bored-coder",
     "description": "The Bored Coder — a personal Ghost theme",
-    "version": "4.0.0",
+    "version": "3.1.3",
     "private": true,
     "engines": {
         "ghost": ">=5.0.0"
@@ -44,17 +44,12 @@
         "custom": {
             "hero_headlines": {
                 "type": "text",
-                "default": "A coder writing through the stuff they don't cover in standup.\nThe codebase is clean. The rest, I'm still refactoring.\nSeven years in tech. Still figuring out the basics.\nI write code for a living and words to make sense of it.\nBuilt software. Got bored. Started writing.",
+                "default": "A coder writing through the stuff they don't cover in standup. | The codebase is clean. The rest, I'm still refactoring. | Seven years in tech. Still figuring out the basics. | Built software. Got bored. Started writing.",
                 "group": "homepage"
             },
             "hero_subtitles": {
                 "type": "text",
-                "default": "Written by someone who is, quite often, productively bored.\nUnreviewed thoughts. Merge at your own risk.\nNo stack traces. Just feelings.\nWritten in the gaps between deploys.\nFor anyone who's felt something's off but couldn't put it in a ticket.",
-                "group": "homepage"
-            },
-            "hero_pill_text": {
-                "type": "text",
-                "default": "Work · Growth · Life",
+                "default": "Written by someone who is, quite often, productively bored. | Unreviewed thoughts. Merge at your own risk. | No stack traces. Just feelings. | Written in the gaps between deploys.",
                 "group": "homepage"
             },
             "writing_page_url": {
@@ -66,6 +61,41 @@
                 "type": "text",
                 "default": "Written, mostly, while bored.",
                 "group": "footer"
+            },
+            "about_location": {
+                "type": "text",
+                "default": "Jakarta, Indonesia",
+                "group": "about"
+            },
+            "about_day_job": {
+                "type": "text",
+                "default": "Software Engineer",
+                "group": "about"
+            },
+            "about_writing_since": {
+                "type": "text",
+                "default": "2023",
+                "group": "about"
+            },
+            "about_currently_into": {
+                "type": "text",
+                "default": "Context window efficiency | Oliver Burkeman | Slow mornings | Street photography | Open-source CLI tools | The craft of plain writing",
+                "group": "about"
+            },
+            "about_email": {
+                "type": "text",
+                "default": "",
+                "group": "about"
+            },
+            "about_github_url": {
+                "type": "text",
+                "default": "",
+                "group": "about"
+            },
+            "about_name_explanation": {
+                "type": "text",
+                "default": "It's a joke and a method. Most of the work I'm proud of started in a moment of boredom — when there was nothing left to react to and an idea could surface on its own. I've stopped fighting it.",
+                "group": "about"
             }
         }
     },
