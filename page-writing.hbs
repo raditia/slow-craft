@@ -12,7 +12,7 @@
             {{/if}}
             <div class="bc-filter-pills bc-filter-pills--light" id="bc-filter-pills">
                 <button class="bc-filter-pill bc-filter-pill--light bc-filter-pill--active" data-filter="all">{{t "All"}}</button>
-                {{#get "tags" include="count.posts" order="count.posts desc" limit="10"}}
+                {{#get "tags" filter="slug:-til" include="count.posts" order="count.posts desc" limit="10"}}
                     {{#foreach tags}}
                         {{#if count.posts}}
                             <button class="bc-filter-pill bc-filter-pill--light" data-filter="{{slug}}">{{name}}</button>
