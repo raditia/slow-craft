@@ -30,11 +30,13 @@
 
 <script>
 (function () {
-    var UNSPLASH_KEY = window.UNSPLASH_ACCESS_KEY;
+    var UNSPLASH_KEY  = window.UNSPLASH_ACCESS_KEY;
     var UNSPLASH_USER = window.UNSPLASH_USERNAME || 'raditia';
-    var PER_PAGE = window.UNSPLASH_PER_PAGE || 30;
+    var PER_PAGE      = window.UNSPLASH_PER_PAGE || 30;
+    var CACHE_KEY     = 'bc_photos_cache';
+    var CACHE_TTL     = 60 * 60 * 1000; // 1 hour in ms
 
-    var grid = document.getElementById('bc-photos-grid');
+    var grid    = document.getElementById('bc-photos-grid');
     var loading = document.getElementById('bc-photos-loading');
     var errorEl = document.getElementById('bc-photos-error');
 
@@ -53,63 +55,98 @@
             if (!src) return;
             img.src = src;
             img.removeAttribute('data-src');
-            img.addEventListener('load', function () {
-                img.classList.add('bc-photo-loaded');
-            });
+            img.addEventListener('load', function () { img.classList.add('bc-photo-loaded'); });
             io.unobserve(img);
         });
     }, { rootMargin: '200px 0px' });
 
+    function renderPhotos(photos) {
+        loading.style.display = 'none';
+
+        if (!photos.length) {
+            errorEl.textContent = 'No photos yet.';
+            errorEl.style.display = 'block';
+            return;
+        }
+
+        photos.forEach(function (photo) {
+            var item = document.createElement('div');
+            item.className = 'bc-photo-item bc-reveal';
+
+            var link = document.createElement('a');
+            link.href = photo.links.html;
+            link.target = '_blank';
+            link.rel = 'noopener';
+            link.setAttribute('aria-label', photo.alt_description || 'Photo by ' + photo.user.name);
+
+            var img = document.createElement('img');
+            img.setAttribute('data-src', photo.urls.regular);
+            img.alt = photo.alt_description || '';
+            img.width = photo.width;
+            img.height = photo.height;
+            img.className = 'bc-photo-img';
+            img.style.aspectRatio = photo.width + ' / ' + photo.height;
+
+            link.appendChild(img);
+            item.appendChild(link);
+            grid.appendChild(item);
+            io.observe(img);
+        });
+
+        setTimeout(function () {
+            grid.querySelectorAll('.bc-reveal').forEach(function (el, i) {
+                setTimeout(function () { el.classList.add('is-visible'); }, i * 40);
+            });
+        }, 50);
+    }
+
+    function getCache() {
+        try {
+            var raw = localStorage.getItem(CACHE_KEY);
+            if (!raw) return null;
+            var cached = JSON.parse(raw);
+            if (Date.now() - cached.ts > CACHE_TTL) return null;
+            return cached.photos;
+        } catch (e) {
+            return null;
+        }
+    }
+
+    function setCache(photos) {
+        try {
+            localStorage.setItem(CACHE_KEY, JSON.stringify({ ts: Date.now(), photos: photos }));
+        } catch (e) {
+            // localStorage full or blocked — silently skip
+        }
+    }
+
+    // Serve from cache if fresh
+    var cached = getCache();
+    if (cached) {
+        renderPhotos(cached);
+        return;
+    }
+
+    // Fetch from Unsplash
     fetch('https://api.unsplash.com/users/' + UNSPLASH_USER + '/photos?per_page=' + PER_PAGE + '&order_by=latest&client_id=' + UNSPLASH_KEY)
         .then(function (res) {
-            if (!res.ok) throw new Error('API error ' + res.status);
+            if (res.status === 403) throw new Error('rate_limited');
+            if (!res.ok) throw new Error('api_error_' + res.status);
             return res.json();
         })
         .then(function (photos) {
-            loading.style.display = 'none';
-
-            if (!photos.length) {
-                errorEl.textContent = 'No photos yet.';
-                errorEl.style.display = 'block';
-                return;
-            }
-
-            photos.forEach(function (photo) {
-                var item = document.createElement('div');
-                item.className = 'bc-photo-item bc-reveal';
-
-                var link = document.createElement('a');
-                link.href = photo.links.html;
-                link.target = '_blank';
-                link.rel = 'noopener';
-                link.setAttribute('aria-label', photo.alt_description || 'Photo by ' + photo.user.name);
-
-                var img = document.createElement('img');
-                img.setAttribute('data-src', photo.urls.regular);
-                img.alt = photo.alt_description || '';
-                img.width = photo.width;
-                img.height = photo.height;
-                img.className = 'bc-photo-img';
-                img.style.aspectRatio = photo.width + ' / ' + photo.height;
-
-                link.appendChild(img);
-                item.appendChild(link);
-                grid.appendChild(item);
-
-                io.observe(img);
-            });
-
-            // Trigger reveal animation
-            setTimeout(function () {
-                grid.querySelectorAll('.bc-reveal').forEach(function (el, i) {
-                    setTimeout(function () { el.classList.add('is-visible'); }, i * 40);
-                });
-            }, 50);
+            setCache(photos);
+            renderPhotos(photos);
         })
         .catch(function (err) {
             loading.style.display = 'none';
+            if (err.message === 'rate_limited') {
+                errorEl.innerHTML = '<p>Photos are taking a break. <a href="https://unsplash.com/@' + UNSPLASH_USER + '" target="_blank" rel="noopener">View on Unsplash</a> in the meantime.</p>';
+            } else {
+                errorEl.innerHTML = '<p>Photos unavailable right now. <a href="https://unsplash.com/@' + UNSPLASH_USER + '" target="_blank" rel="noopener">View on Unsplash</a>.</p>';
+            }
             errorEl.style.display = 'block';
-            console.error('Unsplash fetch failed:', err);
+            console.error('Unsplash fetch failed:', err.message);
         });
 })();
 </script>
