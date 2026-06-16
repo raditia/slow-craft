@@ -20,10 +20,16 @@
                         {{#if @custom.about_email}}
                             <a class="bc-btn bc-btn--primary" href="mailto:{{@custom.about_email}}">{{t "Email me"}}</a>
                         {{/if}}
-                        {{#if @site.members_enabled}}
-                            <a class="bc-btn bc-btn--secondary" href="#/portal/signup" data-portal="signup">{{t "Newsletter"}}</a>
-                        {{/if}}
-                        <a class="bc-btn bc-btn--secondary" href="{{@site.url}}/rss">RSS</a>
+                        {{! Social icons inline with actions }}
+                        <div class="bc-about-actions-social">
+                            {{#if twitter}}<a class="bc-about-social-link" href="{{social_url type="twitter"}}" target="_blank" rel="noopener" aria-label="Twitter">{{> "icons/twitter"}}</a>{{/if}}
+                            {{#if facebook}}<a class="bc-about-social-link" href="{{social_url type="facebook"}}" target="_blank" rel="noopener" aria-label="Facebook">{{> "icons/facebook"}}</a>{{/if}}
+                            {{#if linkedin}}<a class="bc-about-social-link" href="{{social_url type="linkedin"}}" target="_blank" rel="noopener" aria-label="LinkedIn">{{> "icons/linkedin"}}</a>{{/if}}
+                            {{#if instagram}}<a class="bc-about-social-link" href="{{social_url type="instagram"}}" target="_blank" rel="noopener" aria-label="Instagram">{{> "icons/instagram"}}</a>{{/if}}
+                            {{#if bluesky}}<a class="bc-about-social-link" href="{{social_url type="bluesky"}}" target="_blank" rel="noopener" aria-label="Bluesky">{{> "icons/bluesky"}}</a>{{/if}}
+                            {{#if threads}}<a class="bc-about-social-link" href="{{social_url type="threads"}}" target="_blank" rel="noopener" aria-label="Threads">{{> "icons/threads"}}</a>{{/if}}
+                            {{#if website}}<a class="bc-about-social-link" href="{{website}}" target="_blank" rel="noopener" aria-label="Website">{{> "icons/website"}}</a>{{/if}}
+                        </div>
                     </div>
                 </div>
             {{/primary_author}}
@@ -55,7 +61,7 @@
         {{#if content}}
         <div class="bc-about-section bc-reveal">
             <div class="bc-about-section-label">{{t "What I do"}}</div>
-            <div class="bc-about-section-body gh-content">
+            <div class="bc-about-section-body">
                 {{content}}
             </div>
         </div>
@@ -75,8 +81,7 @@
         {{#if @custom.about_currently_into}}
         <div class="bc-about-section bc-about-section--last bc-reveal">
             <div class="bc-about-section-label">{{t "Currently into"}}</div>
-            <div class="bc-about-currently-into" id="bc-about-interests">
-            </div>
+            <div class="bc-about-currently-into" id="bc-about-interests"></div>
         </div>
         <script>
         (function () {
@@ -93,20 +98,6 @@
         })();
         </script>
         {{/if}}
-
-        {{! Social links }}
-        {{#primary_author}}
-        {{#if twitter}}
-        <div class="bc-about-social-row bc-reveal">
-            {{#if twitter}}<a class="bc-about-social-link" href="{{social_url type="twitter"}}" target="_blank" rel="noopener">{{> "icons/twitter"}}</a>{{/if}}
-            {{#if facebook}}<a class="bc-about-social-link" href="{{social_url type="facebook"}}" target="_blank" rel="noopener">{{> "icons/facebook"}}</a>{{/if}}
-            {{#if linkedin}}<a class="bc-about-social-link" href="{{social_url type="linkedin"}}" target="_blank" rel="noopener">{{> "icons/linkedin"}}</a>{{/if}}
-            {{#if instagram}}<a class="bc-about-social-link" href="{{social_url type="instagram"}}" target="_blank" rel="noopener">{{> "icons/instagram"}}</a>{{/if}}
-            {{#if bluesky}}<a class="bc-about-social-link" href="{{social_url type="bluesky"}}" target="_blank" rel="noopener">{{> "icons/bluesky"}}</a>{{/if}}
-            {{#if website}}<a class="bc-about-social-link" href="{{website}}" target="_blank" rel="noopener">{{> "icons/website"}}</a>{{/if}}
-        </div>
-        {{/if}}
-        {{/primary_author}}
 
     </div>
 </main>

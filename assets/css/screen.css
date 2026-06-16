@@ -1493,14 +1493,23 @@ img {
 
 .bc-about-actions {
     display: flex;
+    align-items: center;
     gap: 10px;
     flex-wrap: wrap;
+}
+
+.bc-about-actions-social {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-left: 4px;
 }
 
 /* Facts grid */
 .bc-about-facts {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
+    border-top: 1px solid var(--bc-border);
     border-bottom: 1px solid var(--bc-border);
 }
 
@@ -1508,11 +1517,19 @@ img {
     padding: 36px 0;
 }
 
+.bc-about-fact:first-child {
+    padding-right: 36px;
+    border-right: 1px solid var(--bc-border);
+}
+
 .bc-about-fact--mid {
     padding-left: 36px;
     padding-right: 36px;
-    border-left: 1px solid var(--bc-border);
     border-right: 1px solid var(--bc-border);
+}
+
+.bc-about-fact:last-child {
+    padding-left: 36px;
 }
 
 .bc-about-fact-label {
@@ -1557,13 +1574,12 @@ img {
     padding-top: 5px;
 }
 
-/* What I do — content cards via Ghost editor */
-.bc-about-section-body.gh-content p {
+/* What I do — content from Ghost editor */
+.bc-about-section-body {
     font-family: var(--bc-font-body);
     font-size: 18px;
     line-height: 1.7;
     color: #3A352E;
-    margin: 0;
 }
 
 /* Skill cards — user adds via HTML card in Ghost editor */
