@@ -1,7 +1,7 @@
 {
     "name": "the-bored-coder",
     "description": "The Bored Coder — a personal Ghost theme",
-    "version": "3.0.8",
+    "version": "3.1.0",
     "private": true,
     "engines": {
         "ghost": ">=5.0.0"
@@ -61,6 +61,31 @@
                 "type": "text",
                 "default": "Written, mostly, while bored.",
                 "group": "footer"
+            },
+            "about_location": {
+                "type": "text",
+                "default": "Jakarta, Indonesia",
+                "group": "about"
+            },
+            "about_day_job": {
+                "type": "text",
+                "default": "Software Engineer",
+                "group": "about"
+            },
+            "about_writing_since": {
+                "type": "text",
+                "default": "2023",
+                "group": "about"
+            },
+            "about_currently_into": {
+                "type": "text",
+                "default": "Context window efficiency | Oliver Burkeman | Slow mornings | Street photography | Open-source CLI tools | The craft of plain writing",
+                "group": "about"
+            },
+            "about_email": {
+                "type": "text",
+                "default": "",
+                "group": "about"
             }
         }
     },

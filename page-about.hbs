@@ -1,0 +1,111 @@
+{{!< default}}
+
+{{#post}}
+<main class="bc-main">
+    <div class="bc-about-page">
+
+        {{! Top: portrait + intro }}
+        <div class="bc-about-top bc-reveal">
+            {{#primary_author}}
+                {{#if profile_image}}
+                    <img class="bc-about-portrait-rect" src="{{profile_image}}" alt="{{name}}">
+                {{/if}}
+                <div class="bc-about-intro">
+                    <span class="bc-tag-label">{{t "About"}}</span>
+                    <h1 class="bc-about-page-title">{{../title}}</h1>
+                    {{#if bio}}
+                        <p class="bc-about-tagline">{{bio}}</p>
+                    {{/if}}
+                    <div class="bc-about-actions">
+                        {{#if @custom.about_email}}
+                            <a class="bc-btn bc-btn--primary" href="mailto:{{@custom.about_email}}">{{t "Email me"}}</a>
+                        {{/if}}
+                        {{#if @site.members_enabled}}
+                            <a class="bc-btn bc-btn--secondary" href="#/portal/signup" data-portal="signup">{{t "Newsletter"}}</a>
+                        {{/if}}
+                        <a class="bc-btn bc-btn--secondary" href="{{@site.url}}/rss">RSS</a>
+                    </div>
+                </div>
+            {{/primary_author}}
+        </div>
+
+        {{! Facts grid }}
+        <div class="bc-about-facts bc-reveal">
+            {{#if @custom.about_location}}
+            <div class="bc-about-fact">
+                <div class="bc-about-fact-label">{{t "Based in"}}</div>
+                <div class="bc-about-fact-value">{{@custom.about_location}}</div>
+            </div>
+            {{/if}}
+            {{#if @custom.about_day_job}}
+            <div class="bc-about-fact bc-about-fact--mid">
+                <div class="bc-about-fact-label">{{t "Day job"}}</div>
+                <div class="bc-about-fact-value">{{@custom.about_day_job}}</div>
+            </div>
+            {{/if}}
+            {{#if @custom.about_writing_since}}
+            <div class="bc-about-fact">
+                <div class="bc-about-fact-label">{{t "Writing since"}}</div>
+                <div class="bc-about-fact-value">{{@custom.about_writing_since}}</div>
+            </div>
+            {{/if}}
+        </div>
+
+        {{! What I do — from page content }}
+        {{#if content}}
+        <div class="bc-about-section bc-reveal">
+            <div class="bc-about-section-label">{{t "What I do"}}</div>
+            <div class="bc-about-section-body gh-content">
+                {{content}}
+            </div>
+        </div>
+        {{/if}}
+
+        {{! The name }}
+        <div class="bc-about-section bc-reveal">
+            <div class="bc-about-section-label">{{t "The name"}}</div>
+            <div class="bc-about-section-body">
+                <p class="bc-about-name-text">{{t "It's a joke and a method. Most of the work I'm proud of started in a moment of boredom — when there was nothing left to react to and an idea could surface on its own. I've stopped fighting it."}}</p>
+            </div>
+        </div>
+
+        {{! Currently into }}
+        {{#if @custom.about_currently_into}}
+        <div class="bc-about-section bc-about-section--last bc-reveal">
+            <div class="bc-about-section-label">{{t "Currently into"}}</div>
+            <div class="bc-about-currently-into" id="bc-about-interests">
+            </div>
+        </div>
+        <script>
+        (function () {
+            var raw = {{json @custom.about_currently_into}};
+            if (!raw) return;
+            var items = raw.split('|').map(function(s){ return s.trim(); }).filter(Boolean);
+            var el = document.getElementById('bc-about-interests');
+            items.forEach(function (item) {
+                var span = document.createElement('span');
+                span.className = 'bc-about-interest';
+                span.textContent = item;
+                el.appendChild(span);
+            });
+        })();
+        </script>
+        {{/if}}
+
+        {{! Social links }}
+        {{#primary_author}}
+        {{#if twitter}}
+        <div class="bc-about-social-row bc-reveal">
+            {{#if twitter}}<a class="bc-about-social-link" href="{{social_url type="twitter"}}" target="_blank" rel="noopener">{{> "icons/twitter"}}</a>{{/if}}
+            {{#if facebook}}<a class="bc-about-social-link" href="{{social_url type="facebook"}}" target="_blank" rel="noopener">{{> "icons/facebook"}}</a>{{/if}}
+            {{#if linkedin}}<a class="bc-about-social-link" href="{{social_url type="linkedin"}}" target="_blank" rel="noopener">{{> "icons/linkedin"}}</a>{{/if}}
+            {{#if instagram}}<a class="bc-about-social-link" href="{{social_url type="instagram"}}" target="_blank" rel="noopener">{{> "icons/instagram"}}</a>{{/if}}
+            {{#if bluesky}}<a class="bc-about-social-link" href="{{social_url type="bluesky"}}" target="_blank" rel="noopener">{{> "icons/bluesky"}}</a>{{/if}}
+            {{#if website}}<a class="bc-about-social-link" href="{{website}}" target="_blank" rel="noopener">{{> "icons/website"}}</a>{{/if}}
+        </div>
+        {{/if}}
+        {{/primary_author}}
+
+    </div>
+</main>
+{{/post}}
