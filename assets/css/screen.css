@@ -1339,6 +1339,38 @@ img {
     color: var(--bc-accent);
 }
 
+/* About social links */
+.bc-about-social {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    margin-top: 38px;
+    flex-wrap: wrap;
+}
+
+.bc-about-social-link {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 40px;
+    height: 40px;
+    border-radius: 10px;
+    border: 1px solid var(--bc-border);
+    color: var(--bc-text-2);
+    transition: border-color 0.25s ease, color 0.25s ease, background 0.25s ease;
+}
+
+.bc-about-social-link:hover {
+    border-color: var(--bc-accent);
+    color: var(--bc-accent);
+    background: rgba(176, 83, 43, 0.06);
+}
+
+.bc-about-social-link svg {
+    width: 18px;
+    height: 18px;
+}
+
 /* ============================================================
    Photos / masonry page
    ============================================================ */
