@@ -1,44 +1,56 @@
 {{!< default}}
 
-<main class="bc-main">
+<main class="bc-main bc-main--v2">
+
+    {{! Dark hero strip }}
+    <div class="bc-hero-dark">
+        <div class="bc-hero-dark-inner">
+            <div class="bc-hero-dark-left bc-reveal">
+                <div class="bc-hero-pill">
+                    <span class="bc-logo-mark"></span>
+                    <span class="bc-hero-pill-text">{{#if @custom.hero_pill_text}}{{@custom.hero_pill_text}}{{else}}Work · Growth · Life{{/if}}</span>
+                </div>
+                <h1 class="bc-hero-dark-headline" id="bc-hero-headline">{{#if @site.description}}{{@site.description}}{{else}}Notes on the slow craft of building things.{{/if}}</h1>
+            </div>
+            <div class="bc-hero-dark-right bc-reveal">
+                <p class="bc-hero-dark-subtitle" id="bc-hero-subtitle">Written by someone who is, quite often, productively bored.</p>
+                <a class="bc-hero-cta" href="{{#if @custom.writing_page_url}}{{@custom.writing_page_url}}{{else}}{{@site.url}}/writing{{/if}}">{{t "Start reading"}} &rarr;</a>
+            </div>
+        </div>
+    </div>
+
+    <script>
+    (function () {
+        function pickRandom(text) {
+            var lines = text.split('\n').map(function(l){ return l.trim(); }).filter(Boolean);
+            return lines.length ? lines[Math.floor(Math.random() * lines.length)] : null;
+        }
+        var headlines = {{json @custom.hero_headlines}};
+        var subtitles = {{json @custom.hero_subtitles}};
+        var picked;
+        if (headlines && (picked = pickRandom(headlines))) {
+            var h = document.getElementById('bc-hero-headline');
+            if (h) h.textContent = picked;
+        }
+        if (subtitles && (picked = pickRandom(subtitles))) {
+            var s = document.getElementById('bc-hero-subtitle');
+            if (s) s.textContent = picked;
+        }
+    })();
+    </script>
+
     <div class="bc-container">
 
-        {{! Hero }}
-        <div class="bc-hero bc-reveal">
-            <h1 class="bc-hero-headline" id="bc-hero-headline">{{#if @site.description}}{{@site.description}}{{else}}Notes on software, attention, and the slow craft of building things.{{/if}}</h1>
-            <p class="bc-hero-subtitle" id="bc-hero-subtitle">Written by someone who is, quite often, productively bored.</p>
-        </div>
-
-        <script>
-        (function () {
-            function pickRandom(text) {
-                var lines = text.split('\n').map(function(l){ return l.trim(); }).filter(Boolean);
-                return lines.length ? lines[Math.floor(Math.random() * lines.length)] : null;
-            }
-            var headlines = {{json @custom.hero_headlines}};
-            var subtitles = {{json @custom.hero_subtitles}};
-            var picked;
-            if (headlines && (picked = pickRandom(headlines))) {
-                var h = document.getElementById('bc-hero-headline');
-                if (h) h.textContent = picked;
-            }
-            if (subtitles && (picked = pickRandom(subtitles))) {
-                var s = document.getElementById('bc-hero-subtitle');
-                if (s) s.textContent = picked;
-            }
-        })();
-        </script>
-
-        {{! Featured post }}
+        {{! Featured post — bridges hero }}
         {{#foreach posts limit="1"}}
-        <a class="bc-featured bc-reveal" href="{{url}}">
-            <div class="bc-featured-image">
+        <a class="bc-featured-card bc-reveal" href="{{url}}">
+            <div class="bc-featured-card-image">
                 {{#if feature_image}}
                     <img
                         srcset="{{img_url feature_image size="m"}} 720w,
                                 {{img_url feature_image size="l"}} 960w,
                                 {{img_url feature_image size="xl"}} 1200w"
-                        sizes="(max-width: 991px) 100vw, 55vw"
+                        sizes="(max-width: 991px) 100vw, 58vw"
                         src="{{img_url feature_image size="l"}}"
                         alt="{{#if feature_image_alt}}{{feature_image_alt}}{{else}}{{title}}{{/if}}"
                     >
@@ -46,15 +58,17 @@
                     <div class="bc-image-placeholder"></div>
                 {{/if}}
             </div>
-            <div class="bc-featured-content">
+            <div class="bc-featured-card-content">
                 {{#if primary_tag}}
-                    <span class="bc-tag-label">{{primary_tag.name}}</span>
+                    <span class="bc-tag-label">{{primary_tag.name}} &nbsp;·&nbsp; {{t "Featured"}}</span>
+                {{else}}
+                    <span class="bc-tag-label">{{t "Featured"}}</span>
                 {{/if}}
-                <h2 class="bc-featured-title">{{title}}</h2>
+                <h2 class="bc-featured-card-title">{{title}}</h2>
                 {{#if custom_excerpt}}
-                    <p class="bc-featured-excerpt">{{custom_excerpt}}</p>
+                    <p class="bc-featured-card-excerpt">{{custom_excerpt}}</p>
                 {{else if excerpt}}
-                    <p class="bc-featured-excerpt">{{excerpt}}</p>
+                    <p class="bc-featured-card-excerpt">{{excerpt}}</p>
                 {{/if}}
                 <div class="bc-post-meta">
                     <span class="bc-post-meta-author">{{primary_author.name}}</span>
@@ -63,6 +77,7 @@
                     <span class="bc-meta-dot"></span>
                     <span>{{reading_time}}</span>
                 </div>
+                <span class="bc-featured-card-cta">{{t "Read article"}} &rarr;</span>
             </div>
         </a>
         {{/foreach}}
@@ -79,20 +94,49 @@
             {{/foreach}}
         </div>
 
-        {{! Archive }}
-        <div class="bc-archive-header bc-reveal">
-            <h2 class="bc-section-label">{{t "From the archive"}}</h2>
+        {{! Newsletter strip }}
+        {{#if @site.members_enabled}}
+        <div class="bc-newsletter-strip bc-reveal">
+            <div class="bc-newsletter-strip-left">
+                <div class="bc-newsletter-strip-label">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#B0532B" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2" y="4" width="20" height="16" rx="2"></rect><path d="M2 7l10 7 10-7"></path></svg>
+                    <span>{{t "Newsletter"}}</span>
+                </div>
+                <h2 class="bc-newsletter-strip-title">{{t "A slow letter, once a month."}}</h2>
+                <p class="bc-newsletter-strip-desc">{{t "What I've been building, reading, and thinking about. No cadence pressure — only when there's something worth saying."}}</p>
+            </div>
+            <div class="bc-newsletter-strip-right">
+                <input type="email" placeholder="{{t "your@email.com"}}" class="bc-newsletter-strip-input" data-members-email>
+                <button class="bc-newsletter-strip-btn" data-members-submit>{{t "Subscribe"}} &rarr;</button>
+                <span class="bc-newsletter-strip-note">{{t "No spam. Unsubscribe whenever."}}</span>
+            </div>
+        </div>
+        {{/if}}
+
+        {{! Archive divider }}
+        <div class="bc-archive-divider bc-reveal">
+            <div class="bc-archive-divider-line"></div>
+            <span class="bc-archive-divider-label">{{t "Archive"}}</span>
+            <div class="bc-archive-divider-line"></div>
         </div>
 
+        {{! Archive with thumbnails }}
         <div class="bc-archive">
             {{#foreach posts from="5"}}
-                <a class="bc-archive-row bc-reveal" href="{{url}}">
-                    {{#if primary_tag}}
-                        <span class="bc-tag-label bc-tag-label--sm">{{primary_tag.name}}</span>
-                    {{else}}
-                        <span class="bc-tag-label bc-tag-label--sm"></span>
-                    {{/if}}
-                    <h3 class="bc-archive-title">{{title}}</h3>
+                <a class="bc-archive-row bc-archive-row--thumb bc-reveal" href="{{url}}">
+                    <div class="bc-archive-thumb">
+                        {{#if feature_image}}
+                            <img src="{{img_url feature_image size="xs"}}" alt="{{title}}">
+                        {{else}}
+                            <div class="bc-image-placeholder"></div>
+                        {{/if}}
+                    </div>
+                    <div class="bc-archive-body">
+                        {{#if primary_tag}}
+                            <span class="bc-tag-label bc-tag-label--sm">{{primary_tag.name}}</span>
+                        {{/if}}
+                        <h3 class="bc-archive-title">{{title}}</h3>
+                    </div>
                     <time class="bc-archive-date" datetime="{{date format="YYYY-MM-DD"}}">{{date format="DD MMM YYYY"}}</time>
                 </a>
             {{/foreach}}

@@ -63,7 +63,7 @@
     {{{body}}}
 
     <footer class="bc-footer">
-        <div class="bc-footer-inner">
+        <div class="bc-footer-inner bc-footer-inner--3col">
             <div class="bc-footer-brand">
                 <div class="bc-footer-logo">
                     <span class="bc-logo-mark bc-logo-mark--sm"></span>
@@ -76,8 +76,18 @@
                 {{/if}}
             </div>
             <nav class="bc-footer-nav" aria-label="{{t "Footer navigation"}}">
+                <span class="bc-footer-nav-label">{{t "Pages"}}</span>
                 {{navigation}}
             </nav>
+            <div class="bc-footer-extra">
+                <span class="bc-footer-nav-label">{{t "More"}}</span>
+                <ul class="nav">
+                    <li><a href="{{@site.url}}/rss">RSS</a></li>
+                    {{#if @site.members_enabled}}
+                        <li><a href="#/portal/signup" data-portal="signup">{{t "Subscribe"}}</a></li>
+                    {{/if}}
+                </ul>
+            </div>
         </div>
     </footer>
 

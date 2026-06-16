@@ -1,0 +1,70 @@
+{{!< default}}
+
+{{#post}}
+<main class="bc-main bc-main--v2">
+
+    <div class="bc-page-hero-dark">
+        <div class="bc-container bc-container--about">
+            <div class="bc-reveal">
+                <div class="bc-newsletter-icon-label">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#B0532B" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2" y="4" width="20" height="16" rx="2"></rect><path d="M2 7l10 7 10-7"></path></svg>
+                    <span class="bc-tag-label" style="display:inline">{{t "Newsletter"}}</span>
+                </div>
+                <h1 class="bc-page-hero-title">{{title}}</h1>
+                {{#if custom_excerpt}}
+                    <p class="bc-page-hero-desc">{{custom_excerpt}}</p>
+                {{/if}}
+            </div>
+        </div>
+    </div>
+
+    {{! Signup card — bridges hero }}
+    <div class="bc-container bc-container--about">
+        <div class="bc-newsletter-card bc-reveal">
+            <h2 class="bc-newsletter-card-title">{{t "Subscribe"}}</h2>
+            <p class="bc-newsletter-card-sub">{{t "Free. No spam. Unsubscribe anytime."}}</p>
+            <div class="bc-newsletter-form">
+                <input type="email" placeholder="{{t "your@email.com"}}" class="bc-newsletter-input" data-members-email>
+                <button class="bc-newsletter-btn" data-members-submit>{{t "Subscribe"}} &rarr;</button>
+            </div>
+            <p class="bc-newsletter-note">{{t "Powered by Ghost. You can manage your subscription anytime."}}</p>
+        </div>
+    </div>
+
+    {{! What to expect + page content }}
+    <div class="bc-container bc-container--about" style="padding-top: 60px;">
+
+        <div class="bc-newsletter-expect-divider bc-reveal">
+            <div class="bc-archive-divider-line"></div>
+            <span class="bc-archive-divider-label">{{t "What to expect"}}</span>
+            <div class="bc-archive-divider-line"></div>
+        </div>
+
+        <div class="bc-newsletter-pillars bc-reveal">
+            <div class="bc-newsletter-pillar">
+                <div class="bc-newsletter-pillar-num">01</div>
+                <div class="bc-newsletter-pillar-title">{{t "What I built"}}</div>
+                <p class="bc-newsletter-pillar-desc">{{t "A quick look at whatever I've been making — usually a tool, sometimes a system."}}</p>
+            </div>
+            <div class="bc-newsletter-pillar">
+                <div class="bc-newsletter-pillar-num">02</div>
+                <div class="bc-newsletter-pillar-title">{{t "What I read"}}</div>
+                <p class="bc-newsletter-pillar-desc">{{t "One or two things from the reading list that turned out to be worth the time."}}</p>
+            </div>
+            <div class="bc-newsletter-pillar">
+                <div class="bc-newsletter-pillar-num">03</div>
+                <div class="bc-newsletter-pillar-title">{{t "One thought"}}</div>
+                <p class="bc-newsletter-pillar-desc">{{t "Something that shifted how I think. Kept short on purpose."}}</p>
+            </div>
+        </div>
+
+        {{#if content}}
+            <div class="bc-newsletter-content gh-content bc-reveal">
+                {{content}}
+            </div>
+        {{/if}}
+
+    </div>
+
+</main>
+{{/post}}

@@ -1,21 +1,35 @@
 {{!< default}}
 
 {{#post}}
-<main class="bc-main">
-    <div class="bc-container bc-container--narrow">
+<main class="bc-main bc-main--v2">
 
-        <div class="bc-page-head bc-reveal">
-            <span class="bc-tag-label">{{t "The Writing"}}</span>
-            <h1 class="bc-page-title">{{title}}</h1>
-            {{#if custom_excerpt}}
-                <p class="bc-page-description">{{custom_excerpt}}</p>
-            {{/if}}
+    <div class="bc-page-hero-dark">
+        <div class="bc-container bc-container--narrow">
+            <div class="bc-reveal">
+                <span class="bc-tag-label">{{t "The Writing"}}</span>
+                <h1 class="bc-page-hero-title">{{title}}</h1>
+                {{#if custom_excerpt}}
+                    <p class="bc-page-hero-desc">{{custom_excerpt}}</p>
+                {{/if}}
+                <div class="bc-filter-pills" id="bc-filter-pills">
+                    <button class="bc-filter-pill bc-filter-pill--active" data-filter="all">{{t "All"}}</button>
+                    {{#get "tags" include="count.posts" order="count.posts desc" limit="10"}}
+                        {{#foreach tags}}
+                            {{#if count.posts}}
+                                <button class="bc-filter-pill" data-filter="{{slug}}">{{name}}</button>
+                            {{/if}}
+                        {{/foreach}}
+                    {{/get}}
+                </div>
+            </div>
         </div>
+    </div>
 
-        <div class="bc-writing-list">
+    <div class="bc-container bc-container--narrow">
+        <div class="bc-writing-list" id="bc-writing-list">
             {{#get "posts" include="tags,authors" limit="100"}}
                 {{#foreach posts}}
-                    <a class="bc-writing-row bc-reveal" href="{{url}}">
+                    <a class="bc-writing-row bc-reveal" href="{{url}}" data-tags="{{#foreach tags}}{{slug}} {{/foreach}}">
                         <time class="bc-writing-date" datetime="{{date format="YYYY-MM-DD"}}">{{date format="DD MMM YYYY"}}</time>
                         <div class="bc-writing-content">
                             {{#if primary_tag}}
@@ -33,7 +47,29 @@
                 {{/foreach}}
             {{/get}}
         </div>
-
     </div>
+
 </main>
+
+<script>
+(function () {
+    var pills = document.querySelectorAll('.bc-filter-pill');
+    var rows  = document.querySelectorAll('#bc-writing-list .bc-writing-row');
+
+    pills.forEach(function (pill) {
+        pill.addEventListener('click', function () {
+            var filter = pill.getAttribute('data-filter');
+
+            pills.forEach(function (p) { p.classList.remove('bc-filter-pill--active'); });
+            pill.classList.add('bc-filter-pill--active');
+
+            rows.forEach(function (row) {
+                var tags = row.getAttribute('data-tags') || '';
+                var show = filter === 'all' || tags.indexOf(filter) !== -1;
+                row.style.display = show ? '' : 'none';
+            });
+        });
+    });
+})();
+</script>
 {{/post}}
