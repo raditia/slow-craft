@@ -1,0 +1,344 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>TIL Publisher — The Bored Coder</title>
+<style>
+  *, *::before, *::after { box-sizing: border-box; }
+  body {
+    margin: 0;
+    min-height: 100vh;
+    background: #F7F5F0;
+    color: #1A1815;
+    font-family: 'Hanken Grotesk', system-ui, sans-serif;
+    display: flex;
+    align-items: flex-start;
+    justify-content: center;
+    padding: 48px 20px;
+  }
+  .card {
+    width: 100%;
+    max-width: 600px;
+    background: #fff;
+    border-radius: 16px;
+    box-shadow: 0 8px 40px -12px rgba(26,24,21,0.14);
+    overflow: hidden;
+  }
+  .card-header {
+    padding: 24px 28px 0;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  .logo-mark {
+    width: 9px; height: 9px;
+    border-radius: 2px;
+    background: #B0532B;
+    display: inline-block;
+    flex-shrink: 0;
+  }
+  .card-title {
+    font-family: 'Space Grotesk', system-ui, sans-serif;
+    font-size: 18px;
+    font-weight: 600;
+    letter-spacing: -0.02em;
+    color: #1A1815;
+  }
+  .card-body { padding: 20px 28px; }
+  label {
+    display: block;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: #A39C8F;
+    margin-bottom: 6px;
+  }
+  input[type="text"], input[type="url"], textarea {
+    width: 100%;
+    font-family: inherit;
+    font-size: 15px;
+    color: #1A1815;
+    background: #F7F5F0;
+    border: 1px solid #E7E2D8;
+    border-radius: 9px;
+    padding: 11px 14px;
+    outline: none;
+    transition: border-color 0.2s;
+    resize: none;
+  }
+  input:focus, textarea:focus { border-color: #B0532B; }
+  textarea { min-height: 140px; line-height: 1.6; }
+  .field { margin-bottom: 16px; }
+  .char-count {
+    font-size: 12px;
+    color: #A39C8F;
+    text-align: right;
+    margin-top: 4px;
+  }
+  .char-count.warn { color: #B0532B; }
+  .row { display: flex; gap: 12px; }
+  .row .field { flex: 1; }
+  .btn {
+    font-family: inherit;
+    font-size: 14px;
+    font-weight: 600;
+    border: none;
+    border-radius: 9px;
+    padding: 12px 24px;
+    cursor: pointer;
+    transition: background 0.2s, opacity 0.2s;
+  }
+  .btn-primary {
+    background: #B0532B;
+    color: #fff;
+    width: 100%;
+  }
+  .btn-primary:hover { background: #8E3D1C; }
+  .btn-primary:disabled { opacity: 0.5; cursor: not-allowed; }
+  .status {
+    margin-top: 14px;
+    padding: 12px 16px;
+    border-radius: 9px;
+    font-size: 14px;
+    display: none;
+  }
+  .status.success { background: #EAF5EA; color: #2D6A2D; display: block; }
+  .status.error   { background: #FDF0ED; color: #8E3D1C; display: block; }
+  .divider {
+    border: none;
+    border-top: 1px solid #E7E2D8;
+    margin: 20px 0;
+  }
+  .settings-toggle {
+    font-size: 12px;
+    color: #A39C8F;
+    cursor: pointer;
+    background: none;
+    border: none;
+    padding: 0;
+    font-family: inherit;
+    text-decoration: underline;
+  }
+  .settings-panel { display: none; margin-top: 14px; }
+  .settings-panel.open { display: block; }
+  .tag-chips {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    margin-top: 6px;
+  }
+  .tag-chip {
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.06em;
+    padding: 4px 10px;
+    border-radius: 999px;
+    border: 1px solid #E7E2D8;
+    color: #57514A;
+    background: transparent;
+    cursor: pointer;
+    font-family: inherit;
+    transition: all 0.15s;
+  }
+  .tag-chip.active {
+    border-color: #B0532B;
+    color: #B0532B;
+    background: rgba(176,83,43,0.08);
+  }
+</style>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:wght@400;500;600;700&family=Space+Grotesk:wght@600&display=swap" rel="stylesheet">
+</head>
+<body>
+<div class="card">
+  <div class="card-header">
+    <span class="logo-mark"></span>
+    <span class="card-title">TIL Publisher</span>
+  </div>
+
+  <div class="card-body">
+    <div class="field">
+      <label>Title</label>
+      <input type="text" id="til-title" placeholder="Today I learned that…" autocomplete="off">
+    </div>
+
+    <div class="field">
+      <label>Content</label>
+      <textarea id="til-body" placeholder="What did you learn? Keep it short."></textarea>
+      <div class="char-count" id="char-count">0 chars</div>
+    </div>
+
+    <div class="field">
+      <label>Extra tags</label>
+      <div class="tag-chips" id="tag-chips">
+        <button class="tag-chip" data-tag="Engineering">Engineering</button>
+        <button class="tag-chip" data-tag="Self Improvement">Self Improvement</button>
+        <button class="tag-chip" data-tag="Life">Life</button>
+        <button class="tag-chip" data-tag="Work">Work</button>
+      </div>
+    </div>
+
+    <button class="btn btn-primary" id="publish-btn" onclick="publish()">Publish TIL →</button>
+    <div class="status" id="status"></div>
+
+    <hr class="divider">
+    <button class="settings-toggle" onclick="toggleSettings()">⚙ Settings</button>
+    <div class="settings-panel" id="settings-panel">
+      <div class="field" style="margin-top:14px">
+        <label>Ghost URL</label>
+        <input type="url" id="ghost-url" placeholder="https://theboredcoder.com">
+      </div>
+      <div class="field">
+        <label>Admin API Key (id:secret)</label>
+        <input type="text" id="api-key" placeholder="6a20a…:d789…" autocomplete="off">
+      </div>
+      <button class="btn" style="background:#1A1815;color:#fff" onclick="saveSettings()">Save settings</button>
+    </div>
+  </div>
+</div>
+
+<script>
+var selectedTags = [];
+
+// Load saved settings
+(function () {
+  var url = localStorage.getItem('til_ghost_url') || '';
+  var key = localStorage.getItem('til_api_key') || '';
+  document.getElementById('ghost-url').value = url;
+  document.getElementById('api-key').value = key;
+})();
+
+// Char count
+document.getElementById('til-body').addEventListener('input', function () {
+  var n = this.value.length;
+  var el = document.getElementById('char-count');
+  el.textContent = n + ' chars';
+  el.className = 'char-count' + (n > 500 ? ' warn' : '');
+});
+
+// Tag chips
+document.querySelectorAll('.tag-chip').forEach(function (chip) {
+  chip.addEventListener('click', function () {
+    var tag = this.getAttribute('data-tag');
+    if (selectedTags.indexOf(tag) === -1) {
+      selectedTags.push(tag);
+      this.classList.add('active');
+    } else {
+      selectedTags = selectedTags.filter(function (t) { return t !== tag; });
+      this.classList.remove('active');
+    }
+  });
+});
+
+function toggleSettings() {
+  document.getElementById('settings-panel').classList.toggle('open');
+}
+
+function saveSettings() {
+  localStorage.setItem('til_ghost_url', document.getElementById('ghost-url').value.replace(/\/$/, ''));
+  localStorage.setItem('til_api_key', document.getElementById('api-key').value.trim());
+  showStatus('Settings saved.', 'success');
+}
+
+function showStatus(msg, type) {
+  var el = document.getElementById('status');
+  el.textContent = msg;
+  el.className = 'status ' + type;
+}
+
+async function createJWT(keyString) {
+  var parts = keyString.split(':');
+  if (parts.length !== 2) throw new Error('Invalid API key format. Expected id:secret');
+  var id = parts[0];
+  var secret = parts[1];
+
+  function b64url(str) {
+    return btoa(str).replace(/\+/g, '-').replace(/\//g, '_').replace(/=+$/, '');
+  }
+
+  var header  = b64url(JSON.stringify({ alg: 'HS256', typ: 'JWT', kid: id }));
+  var now     = Math.floor(Date.now() / 1000);
+  var payload = b64url(JSON.stringify({ iat: now, exp: now + 300, aud: '/admin/' }));
+  var data    = header + '.' + payload;
+
+  var secretBytes = new Uint8Array(secret.match(/.{2}/g).map(function (b) { return parseInt(b, 16); }));
+  var cryptoKey   = await crypto.subtle.importKey('raw', secretBytes, { name: 'HMAC', hash: 'SHA-256' }, false, ['sign']);
+  var sigBuf      = await crypto.subtle.sign('HMAC', cryptoKey, new TextEncoder().encode(data));
+  var sig         = btoa(String.fromCharCode.apply(null, new Uint8Array(sigBuf)))
+                      .replace(/\+/g, '-').replace(/\//g, '_').replace(/=+$/, '');
+
+  return data + '.' + sig;
+}
+
+async function publish() {
+  var title   = document.getElementById('til-title').value.trim();
+  var body    = document.getElementById('til-body').value.trim();
+  var ghostUrl = localStorage.getItem('til_ghost_url') || '';
+  var apiKey   = localStorage.getItem('til_api_key') || '';
+
+  if (!title) { showStatus('Title is required.', 'error'); return; }
+  if (!body)  { showStatus('Content is required.', 'error'); return; }
+  if (!ghostUrl || !apiKey) {
+    showStatus('Configure Ghost URL and API key in Settings first.', 'error');
+    document.getElementById('settings-panel').classList.add('open');
+    return;
+  }
+
+  var btn = document.getElementById('publish-btn');
+  btn.disabled = true;
+  btn.textContent = 'Publishing…';
+
+  try {
+    var jwt  = await createJWT(apiKey);
+    var tags = [{ name: 'TIL' }].concat(selectedTags.map(function (t) { return { name: t }; }));
+    var html = body.split('\n\n').map(function (p) {
+      return '<p>' + p.replace(/\n/g, '<br>') + '</p>';
+    }).join('');
+
+    var res = await fetch(ghostUrl + '/ghost/api/admin/posts/', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': 'Ghost ' + jwt
+      },
+      body: JSON.stringify({
+        posts: [{
+          title: title,
+          html: html,
+          status: 'published',
+          tags: tags
+        }]
+      })
+    });
+
+    var data = await res.json();
+    if (!res.ok) {
+      var errMsg = (data.errors && data.errors[0] && data.errors[0].message) || res.statusText;
+      throw new Error(errMsg);
+    }
+
+    var post = data.posts[0];
+    showStatus('Published! ' + post.url, 'success');
+    document.getElementById('til-title').value = '';
+    document.getElementById('til-body').value = '';
+    document.getElementById('char-count').textContent = '0 chars';
+    selectedTags = [];
+    document.querySelectorAll('.tag-chip').forEach(function (c) { c.classList.remove('active'); });
+
+  } catch (err) {
+    showStatus('Error: ' + err.message, 'error');
+  } finally {
+    btn.disabled = false;
+    btn.textContent = 'Publish TIL →';
+  }
+}
+
+// Cmd/Ctrl+Enter to publish
+document.getElementById('til-body').addEventListener('keydown', function (e) {
+  if ((e.metaKey || e.ctrlKey) && e.key === 'Enter') publish();
+});
+</script>
+</body>
+</html>
