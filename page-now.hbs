@@ -1,29 +1,26 @@
 {{!< default}}
 
 {{#post}}
-<main class="bc-main bc-main--v2">
-
-    <div class="bc-page-hero-dark">
-        <div class="bc-container bc-container--about">
-            <div class="bc-reveal">
-                <span class="bc-tag-label">{{t "Now"}}</span>
-                <h1 class="bc-page-hero-title">{{title}}</h1>
-                {{#if custom_excerpt}}
-                    <p class="bc-page-hero-desc">{{custom_excerpt}}</p>
-                {{/if}}
-                {{#if updated_at}}
-                    <p class="bc-now-updated">{{t "Last updated"}} <time datetime="{{date updated_at format="YYYY-MM-DD"}}">{{date updated_at format="DD MMM YYYY"}}</time></p>
-                {{/if}}
-            </div>
-        </div>
-    </div>
-
+<main class="bc-main">
     <div class="bc-container bc-container--about">
+
+        <div class="bc-page-head bc-reveal">
+            <span class="bc-tag-label">{{t "Now"}}</span>
+            <h1 class="bc-page-title">{{title}}</h1>
+            {{#if custom_excerpt}}
+                <p class="bc-page-description">{{custom_excerpt}}</p>
+            {{/if}}
+            {{#if updated_at}}
+                <p class="bc-now-updated">{{t "Last updated"}} <time datetime="{{date updated_at format="YYYY-MM-DD"}}">{{date updated_at format="DD MMM YYYY"}}</time></p>
+            {{/if}}
+        </div>
+
         <div class="bc-now-content gh-content bc-reveal">
             {{content}}
         </div>
-        <p class="bc-now-footer bc-reveal">{{t "This is a"}} <a href="https://nownownow.com/about" target="_blank" rel="noopener">/now page</a>. {{t "It's meant to be updated, not archived."}}</p>
-    </div>
 
+        <p class="bc-now-footer bc-reveal">{{t "This is a"}} <a href="https://nownownow.com/about" target="_blank" rel="noopener">/now page</a>. {{t "It's meant to be updated, not archived."}}</p>
+
+    </div>
 </main>
 {{/post}}
