@@ -12,10 +12,105 @@
             {{/if}}
         </div>
 
-        <div class="bc-masonry gh-content">
-            {{content}}
+        {{! JS-powered masonry — auto-syncs with Unsplash }}
+        <div class="bc-photos-grid" id="bc-photos-grid" aria-label="Photo gallery">
+            <div class="bc-photos-loading" id="bc-photos-loading">
+                <span class="bc-photos-loading-dot"></span>
+                <span class="bc-photos-loading-dot"></span>
+                <span class="bc-photos-loading-dot"></span>
+            </div>
+        </div>
+
+        <div class="bc-photos-error" id="bc-photos-error" style="display:none">
+            <p>Photos unavailable. Check back soon.</p>
         </div>
 
     </div>
 </main>
+
+<script>
+(function () {
+    var UNSPLASH_KEY = window.UNSPLASH_ACCESS_KEY;
+    var UNSPLASH_USER = window.UNSPLASH_USERNAME || 'raditia';
+    var PER_PAGE = window.UNSPLASH_PER_PAGE || 30;
+
+    var grid = document.getElementById('bc-photos-grid');
+    var loading = document.getElementById('bc-photos-loading');
+    var errorEl = document.getElementById('bc-photos-error');
+
+    if (!UNSPLASH_KEY) {
+        loading.style.display = 'none';
+        errorEl.style.display = 'block';
+        console.warn('Missing UNSPLASH_ACCESS_KEY. Add it via Ghost Admin > Code Injection.');
+        return;
+    }
+
+    var io = new IntersectionObserver(function (entries) {
+        entries.forEach(function (entry) {
+            if (!entry.isIntersecting) return;
+            var img = entry.target;
+            var src = img.getAttribute('data-src');
+            if (!src) return;
+            img.src = src;
+            img.removeAttribute('data-src');
+            img.addEventListener('load', function () {
+                img.classList.add('bc-photo-loaded');
+            });
+            io.unobserve(img);
+        });
+    }, { rootMargin: '200px 0px' });
+
+    fetch('https://api.unsplash.com/users/' + UNSPLASH_USER + '/photos?per_page=' + PER_PAGE + '&order_by=latest&client_id=' + UNSPLASH_KEY)
+        .then(function (res) {
+            if (!res.ok) throw new Error('API error ' + res.status);
+            return res.json();
+        })
+        .then(function (photos) {
+            loading.style.display = 'none';
+
+            if (!photos.length) {
+                errorEl.textContent = 'No photos yet.';
+                errorEl.style.display = 'block';
+                return;
+            }
+
+            photos.forEach(function (photo) {
+                var item = document.createElement('div');
+                item.className = 'bc-photo-item bc-reveal';
+
+                var link = document.createElement('a');
+                link.href = photo.links.html;
+                link.target = '_blank';
+                link.rel = 'noopener';
+                link.setAttribute('aria-label', photo.alt_description || 'Photo by ' + photo.user.name);
+
+                var img = document.createElement('img');
+                img.setAttribute('data-src', photo.urls.regular);
+                img.alt = photo.alt_description || '';
+                img.width = photo.width;
+                img.height = photo.height;
+                img.className = 'bc-photo-img';
+                img.style.aspectRatio = photo.width + ' / ' + photo.height;
+
+                link.appendChild(img);
+                item.appendChild(link);
+                grid.appendChild(item);
+
+                io.observe(img);
+            });
+
+            // Trigger reveal animation
+            setTimeout(function () {
+                grid.querySelectorAll('.bc-reveal').forEach(function (el, i) {
+                    setTimeout(function () { el.classList.add('is-visible'); }, i * 40);
+                });
+            }, 50);
+        })
+        .catch(function (err) {
+            loading.style.display = 'none';
+            errorEl.style.display = 'block';
+            console.error('Unsplash fetch failed:', err);
+        });
+})();
+</script>
 {{/post}}
