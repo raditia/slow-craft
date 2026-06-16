@@ -62,12 +62,14 @@
         {{/if}}
 
         {{! The name }}
+        {{#if @custom.about_name_explanation}}
         <div class="bc-about-section bc-reveal">
             <div class="bc-about-section-label">{{t "The name"}}</div>
             <div class="bc-about-section-body">
-                <p class="bc-about-name-text">{{t "It's a joke and a method. Most of the work I'm proud of started in a moment of boredom — when there was nothing left to react to and an idea could surface on its own. I've stopped fighting it."}}</p>
+                <p class="bc-about-name-text">{{@custom.about_name_explanation}}</p>
             </div>
         </div>
+        {{/if}}
 
         {{! Currently into }}
         {{#if @custom.about_currently_into}}

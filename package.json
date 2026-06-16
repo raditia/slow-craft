@@ -1,7 +1,7 @@
 {
     "name": "the-bored-coder",
     "description": "The Bored Coder — a personal Ghost theme",
-    "version": "3.1.0",
+    "version": "3.1.1",
     "private": true,
     "engines": {
         "ghost": ">=5.0.0"
@@ -85,6 +85,11 @@
             "about_email": {
                 "type": "text",
                 "default": "",
+                "group": "about"
+            },
+            "about_name_explanation": {
+                "type": "text",
+                "default": "It's a joke and a method. Most of the work I'm proud of started in a moment of boredom — when there was nothing left to react to and an idea could surface on its own. I've stopped fighting it.",
                 "group": "about"
             }
         }
