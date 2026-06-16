@@ -42,6 +42,16 @@
         },
         "card_assets": true,
         "custom": {
+            "hero_headlines": {
+                "type": "text",
+                "default": "A coder writing through the stuff they don't cover in standup.\nThe codebase is clean. The rest, I'm still refactoring.\nSeven years in tech. Still figuring out the basics.\nI write code for a living and words to make sense of it.\nBuilt software. Got bored. Started writing.",
+                "group": "homepage"
+            },
+            "hero_subtitles": {
+                "type": "text",
+                "default": "Written by someone who is, quite often, productively bored.\nUnreviewed thoughts. Merge at your own risk.\nNo stack traces. Just feelings.\nWritten in the gaps between deploys.",
+                "group": "homepage"
+            },
             "hero_subtitle": {
                 "type": "text",
                 "default": "Written by someone who is, quite often, productively bored.",

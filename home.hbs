@@ -5,11 +5,30 @@
 
         {{! Hero }}
         <div class="bc-hero bc-reveal">
-            <h1 class="bc-hero-headline">{{#if @site.description}}{{@site.description}}{{else}}Notes on software, attention, and the slow craft of building things.{{/if}}</h1>
-            {{#if @custom.hero_subtitle}}
-                <p class="bc-hero-subtitle">{{@custom.hero_subtitle}}</p>
-            {{/if}}
+            <h1 class="bc-hero-headline" id="bc-hero-headline">{{#if @site.description}}{{@site.description}}{{else}}Notes on software, attention, and the slow craft of building things.{{/if}}</h1>
+            <p class="bc-hero-subtitle" id="bc-hero-subtitle">{{#if @custom.hero_subtitle}}{{@custom.hero_subtitle}}{{else}}Written by someone who is, quite often, productively bored.{{/if}}</p>
         </div>
+
+        {{#if @custom.hero_headlines}}
+        <script>
+        (function () {
+            function pickRandom(text) {
+                var lines = text.split('\n').map(function(l){ return l.trim(); }).filter(Boolean);
+                return lines[Math.floor(Math.random() * lines.length)];
+            }
+            var headlines = {{json @custom.hero_headlines}};
+            var subtitles = {{json @custom.hero_subtitles}};
+            if (headlines) {
+                var h = document.getElementById('bc-hero-headline');
+                if (h) h.textContent = pickRandom(headlines);
+            }
+            if (subtitles) {
+                var s = document.getElementById('bc-hero-subtitle');
+                if (s) s.textContent = pickRandom(subtitles);
+            }
+        })();
+        </script>
+        {{/if}}
 
         {{! Featured post }}
         {{#foreach posts limit="1"}}
