@@ -559,29 +559,27 @@ img {
 }
 
 /* ============================================================
-   Home — Featured post (with image)
+   Home — Newest post hero (open layout, no featured flag)
    ============================================================ */
 .bc-featured {
     display: grid;
-    grid-template-columns: 1.4fr 1fr;
-    align-items: stretch;
-    background: #fff;
-    border-radius: 16px;
-    box-shadow: 0 8px 48px -12px rgba(26, 24, 21, 0.18);
-    overflow: hidden;
-    margin: 56px 0 60px;
-    min-height: 380px;
+    grid-template-columns: 1.15fr 1fr;
+    gap: 54px;
+    align-items: center;
+    padding: 56px 0 60px;
+    border-bottom: 1px solid var(--bc-border);
     text-decoration: none;
-    transition: box-shadow 0.4s ease, transform 0.4s ease;
+    transition: opacity 0.2s ease;
 }
 
 .bc-featured:hover {
-    box-shadow: 0 16px 64px -16px rgba(26, 24, 21, 0.28);
-    transform: translateY(-2px);
+    opacity: 0.95;
 }
 
 .bc-featured-image {
     overflow: hidden;
+    border-radius: 10px;
+    aspect-ratio: 4/3;
 }
 
 .bc-featured-image img {
@@ -593,14 +591,81 @@ img {
 }
 
 .bc-featured:hover .bc-featured-image img {
+    transform: scale(1.025);
+}
+
+.bc-featured-title {
+    font-family: var(--bc-font-head);
+    font-weight: 600;
+    font-size: clamp(28px, 3.4vw, 48px);
+    line-height: 1.02;
+    letter-spacing: -0.035em;
+    color: var(--bc-text);
+    margin: 0 0 18px;
+    text-wrap: balance;
+}
+
+.bc-featured-excerpt {
+    font-family: var(--bc-font-body);
+    font-weight: 400;
+    font-size: 18px;
+    line-height: 1.55;
+    color: var(--bc-text-2);
+    margin: 0 0 26px;
+    max-width: 36ch;
+}
+
+/* ============================================================
+   Home — Featured post card (white card, featured flag set)
+   ============================================================ */
+.bc-featured--card {
+    grid-template-columns: 1.4fr 1fr;
+    align-items: stretch;
+    gap: 0;
+    background: #fff;
+    border-radius: 16px;
+    box-shadow: 0 8px 48px -12px rgba(26, 24, 21, 0.18);
+    overflow: hidden;
+    padding: 0;
+    margin: 56px 0 60px;
+    min-height: 380px;
+    border-bottom: none;
+    transition: box-shadow 0.4s ease, transform 0.4s ease;
+}
+
+.bc-featured--card:hover {
+    opacity: 1;
+    box-shadow: 0 16px 64px -16px rgba(26, 24, 21, 0.28);
+    transform: translateY(-2px);
+}
+
+.bc-featured--card .bc-featured-image {
+    border-radius: 0;
+    aspect-ratio: unset;
+}
+
+.bc-featured--card:hover .bc-featured-image img {
     transform: scale(1.03);
 }
 
-.bc-featured-content {
+.bc-featured--card .bc-featured-content {
     padding: 48px 44px;
     display: flex;
     flex-direction: column;
     justify-content: center;
+}
+
+.bc-featured--card .bc-featured-title {
+    font-size: clamp(24px, 2.4vw, 36px);
+    line-height: 1.06;
+    letter-spacing: -0.03em;
+    margin: 0 0 14px;
+}
+
+.bc-featured--card .bc-featured-excerpt {
+    font-size: 16px;
+    line-height: 1.6;
+    margin: 0 0 28px;
 }
 
 .bc-featured-kicker {
@@ -612,27 +677,6 @@ img {
     color: var(--bc-accent);
     display: block;
     margin-bottom: 14px;
-}
-
-.bc-featured-title {
-    font-family: var(--bc-font-head);
-    font-weight: 600;
-    font-size: clamp(24px, 2.4vw, 36px);
-    line-height: 1.06;
-    letter-spacing: -0.03em;
-    color: var(--bc-text);
-    margin: 0 0 14px;
-    text-wrap: balance;
-}
-
-.bc-featured-excerpt {
-    font-family: var(--bc-font-body);
-    font-weight: 400;
-    font-size: 16px;
-    line-height: 1.6;
-    color: var(--bc-text-2);
-    margin: 0 0 28px;
-    max-width: 36ch;
 }
 
 .bc-featured-read {
@@ -680,15 +724,21 @@ img {
 @media (max-width: 767px) {
     .bc-featured {
         grid-template-columns: 1fr;
-        min-height: 0;
-        margin: 40px 0 40px;
+        gap: 24px;
+        padding: 40px 0 40px;
     }
 
-    .bc-featured-image {
+    .bc-featured--card {
+        min-height: 0;
+        margin: 40px 0 40px;
+        padding: 0;
+    }
+
+    .bc-featured--card .bc-featured-image {
         height: 240px;
     }
 
-    .bc-featured-content {
+    .bc-featured--card .bc-featured-content {
         padding: 32px 28px;
     }
 }
