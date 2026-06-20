@@ -1,7 +1,7 @@
 {
     "name": "the-bored-coder",
     "description": "The Bored Coder — a personal Ghost theme",
-    "version": "3.3.2",
+    "version": "3.3.3",
     "private": true,
     "engines": {
         "ghost": ">=5.0.0"
@@ -100,11 +100,6 @@
             "github_username": {
                 "type": "text",
                 "default": "raditia",
-                "group": "integrations"
-            },
-            "wakatime_api_key": {
-                "type": "text",
-                "default": "",
                 "group": "integrations"
             }
         }
