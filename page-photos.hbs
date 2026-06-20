@@ -35,22 +35,14 @@
 
 <script>
 (function () {
-    var UNSPLASH_KEY  = window.UNSPLASH_ACCESS_KEY;
-    var UNSPLASH_USER = window.UNSPLASH_USERNAME || 'raditia';
-    var PER_PAGE      = window.UNSPLASH_PER_PAGE || 30;
+    var UNSPLASH_USER = {{json @custom.github_username}} || 'raditia';
+    var PER_PAGE      = 30;
     var CACHE_KEY     = 'bc_photos_cache';
     var CACHE_TTL     = 60 * 60 * 1000; // 1 hour
 
     var grid    = document.getElementById('bc-photos-grid');
     var loading = document.getElementById('bc-photos-loading');
     var errorEl = document.getElementById('bc-photos-error');
-
-    if (!UNSPLASH_KEY) {
-        loading.style.display = 'none';
-        errorEl.style.display = 'block';
-        console.warn('Missing UNSPLASH_ACCESS_KEY. Add it via Ghost Admin > Code Injection.');
-        return;
-    }
 
     var io = new IntersectionObserver(function (entries) {
         entries.forEach(function (entry) {
@@ -150,7 +142,7 @@
     }
 
     // Cache expired or missing — fetch fresh, fall back to stale on error
-    fetch('https://api.unsplash.com/users/' + UNSPLASH_USER + '/photos?per_page=' + PER_PAGE + '&order_by=latest&client_id=' + UNSPLASH_KEY)
+    fetch('/api/unsplash/users/' + UNSPLASH_USER + '/photos?per_page=' + PER_PAGE + '&order_by=latest')
         .then(function (res) {
             if (res.status === 403) throw new Error('rate_limited');
             if (!res.ok) throw new Error('api_error_' + res.status);
