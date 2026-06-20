@@ -1,7 +1,7 @@
 {
     "name": "the-bored-coder",
     "description": "The Bored Coder — a personal Ghost theme",
-    "version": "3.2.4",
+    "version": "3.3.0",
     "private": true,
     "engines": {
         "ghost": ">=5.0.0"
@@ -96,6 +96,16 @@
                 "type": "text",
                 "default": "It's a joke and a method. Most of the work I'm proud of started in a moment of boredom — when there was nothing left to react to and an idea could surface on its own. I've stopped fighting it.",
                 "group": "about"
+            },
+            "github_username": {
+                "type": "text",
+                "default": "raditia",
+                "group": "integrations"
+            },
+            "wakatime_api_key": {
+                "type": "text",
+                "default": "",
+                "group": "integrations"
             }
         }
     },

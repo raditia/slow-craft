@@ -15,6 +15,74 @@
             {{/if}}
         </div>
 
+        {{! Building section — GitHub + Wakatime }}
+        {{#if @custom.github_username}}
+        <div class="bc-now-building bc-reveal">
+
+            <div class="bc-now-section-label">
+                <span class="bc-now-dot"></span>
+                <span>{{t "Building"}}</span>
+            </div>
+
+            {{! Currently building card — populated by JS }}
+            <div class="bc-now-currently-card" id="bc-now-currently-card">
+                <div class="bc-now-skeleton-line" style="width:40%;margin-bottom:12px"></div>
+                <div class="bc-now-skeleton-line" style="width:80%;margin-bottom:8px"></div>
+                <div class="bc-now-skeleton-line" style="width:60%"></div>
+            </div>
+
+            {{! Wakatime stats }}
+            <div class="bc-now-waka">
+                <div class="bc-now-waka-hero">
+                    <span class="bc-now-waka-hours" id="bc-now-waka-hours">—</span>
+                    <span class="bc-now-waka-label">{{t "hrs of code this week"}}</span>
+                </div>
+                <p class="bc-now-waka-avg" id="bc-now-waka-avg">{{t "tracked via Wakatime"}}</p>
+                <div class="bc-now-stats-grid">
+                    <div class="bc-now-stats-col">
+                        <div class="bc-now-stats-head">{{t "Languages"}}</div>
+                        <div id="bc-now-languages">
+                            <div class="bc-now-stat-row"><span class="bc-now-skeleton-inline" style="display:inline-block;width:80px;height:14px"></span><span class="bc-now-skeleton-inline" style="display:inline-block;width:30px;height:14px"></span></div>
+                            <div class="bc-now-stat-row"><span class="bc-now-skeleton-inline" style="display:inline-block;width:60px;height:14px"></span><span class="bc-now-skeleton-inline" style="display:inline-block;width:30px;height:14px"></span></div>
+                            <div class="bc-now-stat-row"><span class="bc-now-skeleton-inline" style="display:inline-block;width:70px;height:14px"></span><span class="bc-now-skeleton-inline" style="display:inline-block;width:30px;height:14px"></span></div>
+                        </div>
+                    </div>
+                    <div class="bc-now-stats-col">
+                        <div class="bc-now-stats-head">{{t "Projects"}}</div>
+                        <div id="bc-now-projects">
+                            <div class="bc-now-stat-row"><span class="bc-now-skeleton-inline" style="display:inline-block;width:80px;height:14px"></span><span class="bc-now-skeleton-inline" style="display:inline-block;width:50px;height:14px"></span></div>
+                            <div class="bc-now-stat-row"><span class="bc-now-skeleton-inline" style="display:inline-block;width:70px;height:14px"></span><span class="bc-now-skeleton-inline" style="display:inline-block;width:50px;height:14px"></span></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            {{! Recent commits — populated by JS }}
+            <div class="bc-now-commits-head">
+                <span class="bc-now-dot"></span>
+                <span>{{t "Recent commits"}}</span>
+            </div>
+            <div id="bc-now-commits">
+                <div class="bc-now-commit-row">
+                    <div class="bc-now-commit-icon bc-now-skeleton-icon"></div>
+                    <div class="bc-now-commit-body">
+                        <div class="bc-now-skeleton-line" style="width:60%;margin-bottom:6px"></div>
+                        <div class="bc-now-skeleton-line" style="width:80%"></div>
+                    </div>
+                </div>
+                <div class="bc-now-commit-row">
+                    <div class="bc-now-commit-icon bc-now-skeleton-icon"></div>
+                    <div class="bc-now-commit-body">
+                        <div class="bc-now-skeleton-line" style="width:55%;margin-bottom:6px"></div>
+                        <div class="bc-now-skeleton-line" style="width:70%"></div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+        <hr class="bc-now-divider">
+        {{/if}}
+
         <div class="bc-now-content gh-content bc-reveal">
             {{content}}
         </div>
@@ -23,4 +91,186 @@
 
     </div>
 </main>
+
+{{#if @custom.github_username}}
+<script>
+(function () {
+    var GITHUB = {{json @custom.github_username}};
+    var WAKA_KEY = {{json @custom.wakatime_api_key}};
+
+    var LANG_COLORS = {
+        'TypeScript': '#3178c6', 'JavaScript': '#f1e05a', 'Python': '#3572A5',
+        'Go': '#00ADD8', 'Rust': '#dea584', 'CSS': '#563d7c', 'HTML': '#e34c26',
+        'Shell': '#89e051', 'Ruby': '#701516', 'Swift': '#FA7343', 'Kotlin': '#F18E33',
+        'Java': '#b07219', 'C': '#555555', 'C++': '#f34b7d', 'PHP': '#4F5D95',
+        'Dart': '#00B4AB', 'Vue': '#41b883', 'SCSS': '#c6538c', 'Handlebars': '#B07219'
+    };
+
+    var ICONS = {
+        push:  '<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#B0532B" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="16 18 22 12 16 6"></polyline><polyline points="8 6 2 12 8 18"></polyline></svg>',
+        pr:    '<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#B0532B" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="18" cy="18" r="3"></circle><circle cx="6" cy="6" r="3"></circle><path d="M6 21V9a9 9 0 009 9"></path></svg>',
+        issue: '<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#B0532B" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="8" x2="12" y2="12"></line><line x1="12" y1="16" x2="12.01" y2="16"></line></svg>',
+        tag:   '<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#B0532B" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20.59 13.41l-7.17 7.17a2 2 0 01-2.83 0L2 12V2h10l8.59 8.59a2 2 0 010 2.82z"></path><line x1="7" y1="7" x2="7.01" y2="7"></line></svg>'
+    };
+
+    function esc(s) {
+        return String(s == null ? '' : s).replace(/[&<>"']/g, function (c) {
+            return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c];
+        });
+    }
+
+    function timeAgo(dateStr) {
+        var diff = Math.floor((Date.now() - new Date(dateStr).getTime()) / 1000);
+        if (diff < 60)    return 'just now';
+        if (diff < 3600)  return Math.floor(diff / 60) + 'm ago';
+        if (diff < 86400) return Math.floor(diff / 3600) + 'h ago';
+        var d = Math.floor(diff / 86400);
+        if (d === 1) return 'yesterday';
+        if (d < 30)  return d + ' days ago';
+        return Math.floor(d / 30) + 'mo ago';
+    }
+
+    function secToHm(s) {
+        var h = Math.floor(s / 3600), m = Math.floor((s % 3600) / 60);
+        return h > 0 ? h + 'h' + (m > 0 ? ' ' + m + 'm' : '') : m + 'm';
+    }
+
+    /* ---- GitHub ---- */
+    if (GITHUB) {
+        fetch('https://api.github.com/users/' + encodeURIComponent(GITHUB) + '/events/public?per_page=30')
+            .then(function (r) { if (!r.ok) throw new Error('gh'); return r.json(); })
+            .then(function (events) {
+                var interesting = events.filter(function (e) {
+                    return ['PushEvent', 'PullRequestEvent', 'IssuesEvent', 'ReleaseEvent', 'CreateEvent'].indexOf(e.type) > -1;
+                });
+
+                var push = events.find(function (e) { return e.type === 'PushEvent'; });
+                if (push) {
+                    fetch('https://api.github.com/repos/' + push.repo.name)
+                        .then(function (r) { return r.json(); })
+                        .then(function (repo) { renderCurrentlyBuilding(repo, push); })
+                        .catch(function () { renderCurrentlyBuilding(null, push); });
+                } else {
+                    var card = document.getElementById('bc-now-currently-card');
+                    if (card) card.innerHTML = '';
+                }
+
+                renderCommits(interesting.slice(0, 5));
+            })
+            .catch(function () {
+                var card = document.getElementById('bc-now-currently-card');
+                if (card) card.innerHTML = '<p style="color:var(--bc-text-4);font-family:var(--bc-font-body);font-size:14px;margin:0">Could not load GitHub data.</p>';
+                var commits = document.getElementById('bc-now-commits');
+                if (commits) commits.innerHTML = '';
+            });
+    }
+
+    function renderCurrentlyBuilding(repo, pushEvent) {
+        var card = document.getElementById('bc-now-currently-card');
+        if (!card) return;
+        var repoName = pushEvent.repo.name;
+        var desc  = repo && repo.description ? esc(repo.description) : '';
+        var lang  = repo && repo.language ? repo.language : '';
+        var color = LANG_COLORS[lang] || '#8C8576';
+        var pushed = timeAgo(pushEvent.created_at);
+        card.innerHTML =
+            '<div class="bc-now-currently-label">' +
+                '<span class="bc-now-currently-dot"></span>' +
+                '<span>Currently building</span>' +
+            '</div>' +
+            '<div class="bc-now-repo-name">' + esc(repoName) + '</div>' +
+            (desc ? '<p class="bc-now-repo-desc">' + desc + '</p>' : '') +
+            '<div class="bc-now-repo-meta">' +
+                (lang ? '<div class="bc-now-repo-lang"><span class="bc-now-repo-lang-dot" style="background:' + esc(color) + '"></span><span>' + esc(lang) + '</span></div><span class="bc-now-repo-sep"></span>' : '') +
+                '<span class="bc-now-repo-date">Last push ' + pushed + '</span>' +
+                '<a class="bc-now-repo-link" href="https://github.com/' + esc(repoName) + '" target="_blank" rel="noopener">View on GitHub &rarr;</a>' +
+            '</div>';
+    }
+
+    function renderCommits(events) {
+        var el = document.getElementById('bc-now-commits');
+        if (!el) return;
+        if (!events.length) { el.innerHTML = ''; return; }
+        el.innerHTML = events.map(function (e) {
+            var icon, action, msg = '';
+            var repo = e.repo.name;
+            if (e.type === 'PushEvent') {
+                icon = ICONS.push;
+                action = 'Pushed to <strong>' + esc(repo) + '</strong>';
+                var commits = e.payload.commits || [];
+                var last = commits[commits.length - 1];
+                if (last) msg = esc(last.message.split('\n')[0]);
+            } else if (e.type === 'PullRequestEvent') {
+                icon = ICONS.pr;
+                var merged = e.payload.action === 'closed' && e.payload.pull_request && e.payload.pull_request.merged;
+                var pa = merged ? 'Merged' : e.payload.action === 'closed' ? 'Closed' : 'Opened';
+                action = pa + ' PR in <strong>' + esc(repo) + '</strong>';
+                if (e.payload.pull_request) msg = esc(e.payload.pull_request.title);
+            } else if (e.type === 'IssuesEvent') {
+                icon = ICONS.issue;
+                action = (e.payload.action === 'closed' ? 'Closed issue in' : 'Opened issue in') + ' <strong>' + esc(repo) + '</strong>';
+                if (e.payload.issue) msg = esc(e.payload.issue.title);
+            } else if (e.type === 'ReleaseEvent') {
+                icon = ICONS.tag;
+                action = 'Released <strong>' + esc(repo) + '</strong>';
+                if (e.payload.release) msg = esc(e.payload.release.tag_name);
+            } else if (e.type === 'CreateEvent' && e.payload.ref_type === 'tag') {
+                icon = ICONS.tag;
+                action = 'Tagged <strong>' + esc(repo) + '</strong>';
+                if (e.payload.ref) msg = esc(e.payload.ref);
+            } else {
+                return '';
+            }
+            return '<div class="bc-now-commit-row">' +
+                '<div class="bc-now-commit-icon">' + icon + '</div>' +
+                '<div class="bc-now-commit-body">' +
+                    '<p class="bc-now-commit-action">' + action + '</p>' +
+                    (msg ? '<p class="bc-now-commit-msg">&ldquo;' + msg + '&rdquo;</p>' : '') +
+                '</div>' +
+                '<span class="bc-now-commit-time">' + timeAgo(e.created_at) + '</span>' +
+            '</div>';
+        }).join('');
+    }
+
+    /* ---- Wakatime ---- */
+    if (WAKA_KEY) {
+        fetch('https://wakatime.com/api/v1/users/current/stats/last_7_days', {
+            headers: { 'Authorization': 'Basic ' + btoa(WAKA_KEY) }
+        })
+            .then(function (r) { if (!r.ok) throw new Error('waka'); return r.json(); })
+            .then(function (json) { if (json.data) renderWakatime(json.data); })
+            .catch(function () {
+                var h = document.getElementById('bc-now-waka-hours');
+                if (h) h.textContent = '—';
+                var a = document.getElementById('bc-now-waka-avg');
+                if (a) a.textContent = 'Wakatime data unavailable.';
+            });
+    }
+
+    function renderWakatime(data) {
+        var hoursEl = document.getElementById('bc-now-waka-hours');
+        if (hoursEl) hoursEl.textContent = Math.round(data.total_seconds / 3600);
+
+        var avgEl = document.getElementById('bc-now-waka-avg');
+        if (avgEl && data.daily_average) {
+            avgEl.textContent = '~' + secToHm(data.daily_average) + ' daily average · tracked via Wakatime';
+        }
+
+        var langsEl = document.getElementById('bc-now-languages');
+        if (langsEl && data.languages && data.languages.length) {
+            langsEl.innerHTML = data.languages.slice(0, 3).map(function (l) {
+                return '<div class="bc-now-stat-row"><span class="bc-now-stat-name">' + esc(l.name) + '</span><span class="bc-now-stat-val">' + Math.round(l.percent) + '%</span></div>';
+            }).join('');
+        }
+
+        var projEl = document.getElementById('bc-now-projects');
+        if (projEl && data.projects && data.projects.length) {
+            projEl.innerHTML = data.projects.slice(0, 2).map(function (p) {
+                return '<div class="bc-now-stat-row"><span class="bc-now-stat-name">' + esc(p.name) + '</span><span class="bc-now-stat-val">' + secToHm(p.total_seconds) + '</span></div>';
+            }).join('');
+        }
+    }
+})();
+</script>
+{{/if}}
 {{/post}}

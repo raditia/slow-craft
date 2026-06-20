@@ -2687,3 +2687,363 @@ img {
     .bc-til-row { grid-template-columns: 1fr; gap: 8px; }
     .bc-til-meta { padding-top: 0; display: flex; align-items: center; gap: 12px; }
 }
+
+/* ============================================================
+   Now page — Building section (GitHub + Wakatime)
+   ============================================================ */
+.bc-now-building {
+    padding: 56px 0 0;
+}
+
+.bc-now-section-label {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 20px;
+}
+
+.bc-now-section-label span:last-child,
+.bc-now-commits-head span:last-child {
+    font-family: var(--bc-font-body);
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--bc-text-4);
+}
+
+.bc-now-dot {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: var(--bc-accent);
+    display: inline-block;
+    flex: none;
+}
+
+/* Currently building card */
+.bc-now-currently-card {
+    position: relative;
+    background: #1A1815;
+    border-radius: 12px;
+    padding: 28px 32px 30px;
+    overflow: hidden;
+    margin-bottom: 40px;
+    min-height: 80px;
+}
+
+.bc-now-currently-card::before {
+    content: '';
+    position: absolute;
+    left: 0; top: 0; bottom: 0;
+    width: 3px;
+    background: var(--bc-accent);
+    border-radius: 3px 0 0 3px;
+}
+
+.bc-now-currently-label {
+    display: flex;
+    align-items: center;
+    gap: 9px;
+    margin-bottom: 16px;
+}
+
+.bc-now-currently-dot {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: var(--bc-accent);
+    flex: none;
+    display: inline-block;
+}
+
+.bc-now-currently-label span:last-child {
+    font-family: var(--bc-font-body);
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--bc-accent);
+}
+
+.bc-now-repo-name {
+    font-family: var(--bc-font-head);
+    font-size: 20px;
+    font-weight: 500;
+    letter-spacing: -0.025em;
+    color: #F7F5F0;
+    margin: 0 0 9px;
+}
+
+.bc-now-repo-desc {
+    font-family: var(--bc-font-body);
+    font-size: 15px;
+    line-height: 1.6;
+    color: #8C8576;
+    margin: 0 0 22px;
+}
+
+.bc-now-repo-meta {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    flex-wrap: wrap;
+}
+
+.bc-now-repo-lang {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.bc-now-repo-lang-dot {
+    width: 9px;
+    height: 9px;
+    border-radius: 50%;
+    display: inline-block;
+    flex: none;
+}
+
+.bc-now-repo-lang span:last-child {
+    font-family: var(--bc-font-body);
+    font-size: 12px;
+    color: #57514A;
+}
+
+.bc-now-repo-sep {
+    width: 3px;
+    height: 3px;
+    border-radius: 50%;
+    background: #3A352E;
+    display: inline-block;
+}
+
+.bc-now-repo-date {
+    font-family: var(--bc-font-body);
+    font-size: 12px;
+    color: #57514A;
+}
+
+.bc-now-repo-link {
+    margin-left: auto;
+    font-family: var(--bc-font-body);
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--bc-accent);
+    text-decoration: none;
+    transition: opacity 0.2s ease;
+}
+
+.bc-now-repo-link:hover { opacity: 0.75; }
+
+/* Wakatime */
+.bc-now-waka {
+    margin-bottom: 40px;
+}
+
+.bc-now-waka-hero {
+    display: flex;
+    align-items: baseline;
+    gap: 12px;
+    margin-bottom: 6px;
+}
+
+.bc-now-waka-hours {
+    font-family: var(--bc-font-head);
+    font-size: 58px;
+    font-weight: 600;
+    letter-spacing: -0.045em;
+    color: var(--bc-text);
+    line-height: 1;
+}
+
+.bc-now-waka-label {
+    font-family: var(--bc-font-head);
+    font-size: 22px;
+    font-weight: 400;
+    letter-spacing: -0.025em;
+    color: var(--bc-text-3);
+    line-height: 1;
+}
+
+.bc-now-waka-avg {
+    font-family: var(--bc-font-body);
+    font-size: 13px;
+    color: var(--bc-text-4);
+    margin: 0 0 28px;
+}
+
+.bc-now-stats-grid {
+    display: flex;
+    gap: 40px;
+}
+
+.bc-now-stats-col { flex: 1; }
+
+.bc-now-stats-head {
+    font-family: var(--bc-font-body);
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--bc-text-4);
+    margin-bottom: 14px;
+}
+
+.bc-now-stat-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    padding: 11px 0;
+    border-bottom: 1px solid var(--bc-border);
+}
+
+.bc-now-stat-row:last-child { border-bottom: none; }
+
+.bc-now-stat-name {
+    font-family: var(--bc-font-head);
+    font-size: 16px;
+    font-weight: 500;
+    letter-spacing: -0.02em;
+    color: var(--bc-text);
+}
+
+.bc-now-stat-val {
+    font-family: var(--bc-font-body);
+    font-size: 13px;
+    color: var(--bc-text-4);
+    font-variant-numeric: tabular-nums;
+}
+
+/* Recent commits */
+.bc-now-commits-head {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin: 40px 0 4px;
+}
+
+.bc-now-commit-row {
+    display: flex;
+    align-items: flex-start;
+    gap: 14px;
+    padding: 16px 0;
+    border-bottom: 1px solid var(--bc-border);
+}
+
+.bc-now-commit-row:last-child { border-bottom: none; }
+
+.bc-now-commit-icon {
+    width: 28px;
+    height: 28px;
+    border-radius: 7px;
+    background: #ECE7DC;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex: none;
+    margin-top: 1px;
+}
+
+.bc-now-commit-body { flex: 1; min-width: 0; }
+
+.bc-now-commit-action {
+    font-family: var(--bc-font-body);
+    font-size: 14px;
+    color: var(--bc-text);
+    margin: 0 0 3px;
+}
+
+.bc-now-commit-msg {
+    font-family: var(--bc-font-head);
+    font-size: 13px;
+    color: var(--bc-text-2);
+    margin: 0;
+    letter-spacing: -0.01em;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.bc-now-commit-time {
+    font-family: var(--bc-font-body);
+    font-size: 12px;
+    color: var(--bc-text-4);
+    white-space: nowrap;
+    flex: none;
+    padding-top: 2px;
+}
+
+.bc-now-divider {
+    border: none;
+    border-top: 1px solid var(--bc-border);
+    margin: 52px 0;
+}
+
+/* Skeleton loading */
+.bc-now-skeleton-line {
+    height: 14px;
+    background: #3A352E;
+    border-radius: 4px;
+    display: block;
+}
+
+.bc-now-skeleton-inline {
+    background: #E7E2D8;
+    border-radius: 4px;
+    display: inline-block;
+    height: 14px;
+}
+
+.bc-now-skeleton-icon {
+    background: #E7E2D8 !important;
+}
+
+/* ============================================================
+   About page — Coding now teaser
+   ============================================================ */
+.bc-about-coding-now {
+    display: grid;
+    grid-template-columns: 200px 1fr;
+    gap: 56px;
+    border-top: 1px solid var(--bc-border);
+    padding: 44px 0 64px;
+}
+
+.bc-about-coding-now-label {
+    font-family: var(--bc-font-body);
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--bc-text-4);
+    padding-top: 5px;
+}
+
+.bc-about-coding-now-text {
+    font-family: var(--bc-font-body);
+    font-size: 17px;
+    line-height: 1.65;
+    color: #3A352E;
+    margin: 0 0 20px;
+    max-width: 48ch;
+}
+
+.bc-about-coding-now-link {
+    font-family: var(--bc-font-body);
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--bc-accent);
+    text-decoration: none;
+    transition: opacity 0.2s ease;
+}
+
+.bc-about-coding-now-link:hover { opacity: 0.75; }
+
+@media (max-width: 767px) {
+    .bc-now-waka-hours { font-size: 40px; }
+    .bc-now-waka-label { font-size: 16px; }
+    .bc-now-stats-grid { flex-direction: column; gap: 0; }
+    .bc-now-repo-link { margin-left: 0; width: 100%; }
+    .bc-about-coding-now { grid-template-columns: 1fr; gap: 16px; padding: 36px 0 48px; }
+}

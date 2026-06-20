@@ -78,7 +78,7 @@
 
         {{! Currently into }}
         {{#if @custom.about_currently_into}}
-        <div class="bc-about-section bc-about-section--last bc-reveal">
+        <div class="bc-about-section bc-reveal">
             <div class="bc-about-section-label">{{t "Currently into"}}</div>
             <div class="bc-about-currently-into" id="bc-about-interests"></div>
         </div>
@@ -94,6 +94,52 @@
                 span.textContent = item;
                 el.appendChild(span);
             });
+        })();
+        </script>
+        {{/if}}
+
+        {{! Coding now teaser — Wakatime summary + link to Now page }}
+        {{#if @custom.github_username}}
+        <div class="bc-about-coding-now bc-reveal">
+            <div class="bc-about-coding-now-label">{{t "Coding now"}}</div>
+            <div>
+                <p class="bc-about-coding-now-text" id="bc-about-coding-now-text">Loading coding stats&hellip;</p>
+                <a class="bc-about-coding-now-link" href="/now">{{t "See what I'm building now"}} &rarr;</a>
+            </div>
+        </div>
+        <script>
+        (function () {
+            var WAKA_KEY = {{json @custom.wakatime_api_key}};
+            if (!WAKA_KEY) {
+                var el = document.getElementById('bc-about-coding-now-text');
+                if (el) el.textContent = 'Tracking coding activity on the Now page.';
+                return;
+            }
+            function secToHm(s) {
+                var h = Math.floor(s / 3600), m = Math.floor((s % 3600) / 60);
+                return h > 0 ? h + 'h' + (m > 0 ? ' ' + m + 'm' : '') : m + 'm';
+            }
+            fetch('https://wakatime.com/api/v1/users/current/stats/last_7_days', {
+                headers: { 'Authorization': 'Basic ' + btoa(WAKA_KEY) }
+            })
+                .then(function (r) { if (!r.ok) throw new Error('waka'); return r.json(); })
+                .then(function (json) {
+                    var data = json.data;
+                    if (!data) return;
+                    var hrs = Math.round(data.total_seconds / 3600);
+                    var topLang = data.languages && data.languages[0] ? data.languages[0].name : '';
+                    var topProject = data.projects && data.projects[0] ? data.projects[0].name : '';
+                    var text = hrs + ' hrs of code last week.';
+                    if (topLang) text += ' Mostly ' + topLang;
+                    if (topProject) text += ', on ' + topProject;
+                    text += '.';
+                    var el = document.getElementById('bc-about-coding-now-text');
+                    if (el) el.textContent = text;
+                })
+                .catch(function () {
+                    var el = document.getElementById('bc-about-coding-now-text');
+                    if (el) el.textContent = 'Tracking coding activity on the Now page.';
+                });
         })();
         </script>
         {{/if}}
