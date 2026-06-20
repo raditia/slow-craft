@@ -641,6 +641,124 @@ img {
     }
 }
 
+/* Featured badge (shown when Ghost "featured" flag is set) */
+.bc-featured-eyebrow {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 16px;
+}
+
+.bc-featured-eyebrow .bc-tag-label {
+    margin-bottom: 0;
+}
+
+.bc-featured-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    background: rgba(176, 83, 43, 0.1);
+    border: 1px solid rgba(176, 83, 43, 0.2);
+    border-radius: 999px;
+    padding: 4px 10px;
+    font-family: var(--bc-font-body);
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--bc-accent);
+    white-space: nowrap;
+}
+
+.bc-featured-badge-dot {
+    width: 5px;
+    height: 5px;
+    border-radius: 50%;
+    background: var(--bc-accent);
+    display: inline-block;
+    flex-shrink: 0;
+}
+
+/* Featured typographic card — no image fallback */
+.bc-featured-typo {
+    display: block;
+    position: relative;
+    overflow: hidden;
+    border-radius: 10px;
+    padding: 52px 56px;
+    margin: 56px 0 60px;
+    border-bottom: 1px solid var(--bc-border);
+    text-decoration: none;
+    transition: opacity 0.2s ease;
+    background: var(--bc-bg-muted);
+}
+
+.bc-featured-typo--work   { background: #EDE7DB; }
+.bc-featured-typo--growth { background: #DFE9E1; }
+.bc-featured-typo--life   { background: #E9DFE9; }
+
+.bc-featured-typo:hover {
+    opacity: 0.9;
+}
+
+.bc-featured-typo-letter {
+    position: absolute;
+    right: -20px;
+    bottom: -50px;
+    font-family: var(--bc-font-head);
+    font-weight: 700;
+    font-size: clamp(120px, 18vw, 260px);
+    line-height: 0.85;
+    text-transform: uppercase;
+    letter-spacing: -0.04em;
+    color: rgba(26, 24, 21, 0.07);
+    pointer-events: none;
+    user-select: none;
+}
+
+.bc-featured-typo-inner {
+    position: relative;
+    z-index: 1;
+    max-width: 680px;
+}
+
+.bc-featured-typo-inner .bc-tag-label {
+    margin-bottom: 16px;
+}
+
+.bc-featured-typo-title {
+    font-family: var(--bc-font-head);
+    font-weight: 600;
+    font-size: clamp(26px, 3.2vw, 44px);
+    line-height: 1.04;
+    letter-spacing: -0.04em;
+    color: var(--bc-text);
+    margin: 0 0 18px;
+    text-wrap: balance;
+}
+
+.bc-featured-typo-excerpt {
+    font-family: var(--bc-font-body);
+    font-size: 17px;
+    line-height: 1.6;
+    color: var(--bc-text-2);
+    margin: 0 0 28px;
+    max-width: 52ch;
+}
+
+@media (max-width: 767px) {
+    .bc-featured-typo {
+        padding: 36px 28px;
+        margin: 40px 0 40px;
+    }
+
+    .bc-featured-typo-letter {
+        font-size: 100px;
+        right: -10px;
+        bottom: -28px;
+    }
+}
+
 /* ============================================================
    Home — 3-col grid
    ============================================================ */
@@ -740,6 +858,70 @@ img {
 .bc-meta-mid {
     margin: 0 3px;
     color: var(--bc-border);
+}
+
+/* Card typographic no-image */
+.bc-card-typo {
+    position: relative;
+    overflow: hidden;
+    border-radius: 9px;
+    margin-bottom: 20px;
+    aspect-ratio: 16/10;
+    background: var(--bc-bg-muted);
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    padding: 20px 22px;
+    box-sizing: border-box;
+    transition: opacity 0.2s ease;
+}
+
+.bc-card-link:hover .bc-card-typo {
+    opacity: 0.88;
+}
+
+.bc-card-typo--work   { background: #EDE7DB; }
+.bc-card-typo--growth { background: #DFE9E1; }
+.bc-card-typo--life   { background: #E9DFE9; }
+
+.bc-card-typo-letter {
+    position: absolute;
+    right: -16px;
+    bottom: -24px;
+    font-family: var(--bc-font-head);
+    font-weight: 700;
+    font-size: 120px;
+    line-height: 0.85;
+    text-transform: uppercase;
+    letter-spacing: -0.04em;
+    color: rgba(26, 24, 21, 0.08);
+    pointer-events: none;
+    user-select: none;
+}
+
+.bc-card-typo-bottom {
+    position: relative;
+    z-index: 1;
+}
+
+.bc-card-typo-bottom .bc-tag-label--sm {
+    margin-bottom: 6px;
+}
+
+.bc-card-typo-title {
+    font-family: var(--bc-font-head);
+    font-weight: 500;
+    font-size: 17px;
+    line-height: 1.2;
+    letter-spacing: -0.02em;
+    color: var(--bc-text);
+    margin: 0;
+    text-wrap: balance;
+    transition: opacity 0.2s ease;
+}
+
+.bc-card-link:hover .bc-card-typo-title {
+    opacity: 0.75;
 }
 
 /* ============================================================
