@@ -29,7 +29,11 @@
         })();
         </script>
 
-        {{! Featured post — prefer Ghost "featured" flag, fallback to newest }}
+        {{! ================================================================
+            Featured post — prefer Ghost "featured" flag, fallback to newest.
+            Each branch owns its section header + grid so "from" can differ.
+            ================================================================ }}
+
         {{#get "posts" filter="tag:-til+featured:true" limit="1" include="authors,tags"}}
             {{#foreach posts}}
             {{#if feature_image}}
@@ -45,10 +49,7 @@
                     >
                 </div>
                 <div class="bc-featured-content">
-                    <div class="bc-featured-eyebrow">
-                        <span class="bc-featured-badge"><span class="bc-featured-badge-dot"></span>Featured</span>
-                        {{#if primary_tag}}<span class="bc-tag-label">{{primary_tag.name}}</span>{{/if}}
-                    </div>
+                    <span class="bc-featured-kicker">{{#if primary_tag}}{{primary_tag.name}} · {{/if}}Featured</span>
                     <h2 class="bc-featured-title">{{title}}</h2>
                     {{#if custom_excerpt}}<p class="bc-featured-excerpt">{{custom_excerpt}}</p>
                     {{else if excerpt}}<p class="bc-featured-excerpt">{{excerpt}}</p>{{/if}}
@@ -59,31 +60,46 @@
                         <span class="bc-meta-dot"></span>
                         <span>{{reading_time}}</span>
                     </div>
+                    <span class="bc-featured-read">Read article →</span>
                 </div>
             </a>
             {{else}}
-            <a class="bc-featured-typo bc-reveal{{#if primary_tag}} bc-featured-typo--{{primary_tag.slug}}{{/if}}" href="{{url}}">
+            <a class="bc-featured-typo bc-reveal" href="{{url}}">
                 {{#if primary_tag}}<span class="bc-featured-typo-letter" aria-hidden="true">{{primary_tag.name}}</span>{{/if}}
                 <div class="bc-featured-typo-inner">
-                    <div class="bc-featured-eyebrow">
-                        <span class="bc-featured-badge"><span class="bc-featured-badge-dot"></span>Featured</span>
-                        {{#if primary_tag}}<span class="bc-tag-label">{{primary_tag.name}}</span>{{/if}}
-                    </div>
+                    <span class="bc-featured-typo-kicker">Featured{{#if primary_tag}} · {{primary_tag.name}}{{/if}}</span>
                     <h2 class="bc-featured-typo-title">{{title}}</h2>
                     {{#if custom_excerpt}}<p class="bc-featured-typo-excerpt">{{custom_excerpt}}</p>
                     {{else if excerpt}}<p class="bc-featured-typo-excerpt">{{excerpt}}</p>{{/if}}
-                    <div class="bc-post-meta">
+                    <div class="bc-post-meta bc-post-meta--dark">
                         <span class="bc-post-meta-author">{{primary_author.name}}</span>
-                        <span class="bc-meta-dot"></span>
+                        <span class="bc-meta-dot bc-meta-dot--dark"></span>
                         <time datetime="{{date format="YYYY-MM-DD"}}">{{date format="DD MMM YYYY"}}</time>
-                        <span class="bc-meta-dot"></span>
+                        <span class="bc-meta-dot bc-meta-dot--dark"></span>
                         <span>{{reading_time}}</span>
                     </div>
+                    <span class="bc-featured-read bc-featured-read--dark">Read article →</span>
                 </div>
             </a>
             {{/if}}
             {{/foreach}}
+
+            {{! Recent — show newest 3 posts (featured hero is separate) }}
+            <div class="bc-section-header bc-reveal">
+                <h2 class="bc-section-label">{{t "Recent"}}</h2>
+                <a class="bc-section-link" href="{{#if @custom.writing_page_url}}{{@custom.writing_page_url}}{{else}}{{@site.url}}/writing{{/if}}">{{t "All writing"}} &rarr;</a>
+            </div>
+            <div class="bc-grid bc-grid--3">
+                {{#get "posts" filter="tag:-til" limit="3" include="authors,tags"}}
+                    {{#foreach posts}}
+                        {{> "loop-grid"}}
+                    {{/foreach}}
+                {{/get}}
+            </div>
+
         {{else}}
+
+            {{! No featured post — show newest as hero }}
             {{#get "posts" filter="tag:-til" limit="1" include="authors,tags"}}
                 {{#foreach posts}}
                 {{#if feature_image}}
@@ -99,7 +115,7 @@
                         >
                     </div>
                     <div class="bc-featured-content">
-                        {{#if primary_tag}}<span class="bc-tag-label">{{primary_tag.name}}</span>{{/if}}
+                        {{#if primary_tag}}<span class="bc-featured-kicker">{{primary_tag.name}}</span>{{/if}}
                         <h2 class="bc-featured-title">{{title}}</h2>
                         {{#if custom_excerpt}}<p class="bc-featured-excerpt">{{custom_excerpt}}</p>
                         {{else if excerpt}}<p class="bc-featured-excerpt">{{excerpt}}</p>{{/if}}
@@ -113,18 +129,18 @@
                     </div>
                 </a>
                 {{else}}
-                <a class="bc-featured-typo bc-reveal{{#if primary_tag}} bc-featured-typo--{{primary_tag.slug}}{{/if}}" href="{{url}}">
+                <a class="bc-featured-typo bc-reveal" href="{{url}}">
                     {{#if primary_tag}}<span class="bc-featured-typo-letter" aria-hidden="true">{{primary_tag.name}}</span>{{/if}}
                     <div class="bc-featured-typo-inner">
-                        {{#if primary_tag}}<span class="bc-tag-label">{{primary_tag.name}}</span>{{/if}}
+                        {{#if primary_tag}}<span class="bc-featured-typo-kicker">{{primary_tag.name}}</span>{{/if}}
                         <h2 class="bc-featured-typo-title">{{title}}</h2>
                         {{#if custom_excerpt}}<p class="bc-featured-typo-excerpt">{{custom_excerpt}}</p>
                         {{else if excerpt}}<p class="bc-featured-typo-excerpt">{{excerpt}}</p>{{/if}}
-                        <div class="bc-post-meta">
+                        <div class="bc-post-meta bc-post-meta--dark">
                             <span class="bc-post-meta-author">{{primary_author.name}}</span>
-                            <span class="bc-meta-dot"></span>
+                            <span class="bc-meta-dot bc-meta-dot--dark"></span>
                             <time datetime="{{date format="YYYY-MM-DD"}}">{{date format="DD MMM YYYY"}}</time>
-                            <span class="bc-meta-dot"></span>
+                            <span class="bc-meta-dot bc-meta-dot--dark"></span>
                             <span>{{reading_time}}</span>
                         </div>
                     </div>
@@ -132,21 +148,21 @@
                 {{/if}}
                 {{/foreach}}
             {{/get}}
+
+            {{! Recent — skip post 1 (shown as hero above) }}
+            <div class="bc-section-header bc-reveal">
+                <h2 class="bc-section-label">{{t "Recent"}}</h2>
+                <a class="bc-section-link" href="{{#if @custom.writing_page_url}}{{@custom.writing_page_url}}{{else}}{{@site.url}}/writing{{/if}}">{{t "All writing"}} &rarr;</a>
+            </div>
+            <div class="bc-grid bc-grid--3">
+                {{#get "posts" filter="tag:-til" limit="4" include="authors,tags"}}
+                    {{#foreach posts from="2"}}
+                        {{> "loop-grid"}}
+                    {{/foreach}}
+                {{/get}}
+            </div>
+
         {{/get}}
-
-        {{! Recent posts }}
-        <div class="bc-section-header bc-reveal">
-            <h2 class="bc-section-label">{{t "Recent"}}</h2>
-            <a class="bc-section-link" href="{{#if @custom.writing_page_url}}{{@custom.writing_page_url}}{{else}}{{@site.url}}/writing{{/if}}">{{t "All writing"}} &rarr;</a>
-        </div>
-
-        <div class="bc-grid bc-grid--3">
-            {{#get "posts" filter="tag:-til" limit="4" include="authors,tags"}}
-                {{#foreach posts from="2"}}
-                    {{> "loop-grid"}}
-                {{/foreach}}
-            {{/get}}
-        </div>
 
         {{! Newsletter strip }}
         {{#if @site.members_enabled}}
