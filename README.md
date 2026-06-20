@@ -74,10 +74,31 @@ npm install          # install dependencies
 npx gulp             # build + watch + livereload
 npx gulp build       # one-shot build (run before committing any CSS change)
 npm run test         # Ghost theme validation (gscan)
-npm run zip          # build + package dist/the-bored-coder.zip
+npm run zip          # build + package dist/the-bored-coder.zip (manual upload only)
 ```
 
 Edit `/assets/css/screen.css` — it compiles to `/assets/built/screen.css`. Always commit both the source and built files.
+
+### Deployment
+
+The VPS auto-deploys from the `main` branch every minute. Workflow:
+
+1. Make changes locally
+2. Run `npx gulp build` if CSS changed
+3. `git push` — VPS picks up changes within 60 seconds
+
+Deploy log on VPS: `cat /var/log/ghost-theme-deploy.log`
+
+### API proxies (Nginx on VPS)
+
+Both external APIs are proxied through Nginx — keys never reach the browser:
+
+| Proxy path | Upstream |
+|---|---|
+| `/api/wakatime/` | `wakatime.com/api/v1/` |
+| `/api/unsplash/` | `api.unsplash.com/` |
+
+Keys live in `/etc/nginx/sites-enabled/theboredcoder.com-ssl.conf`.
 
 ---
 
