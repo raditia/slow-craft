@@ -109,19 +109,11 @@
         </div>
         <script>
         (function () {
-            var WAKA_KEY = {{json @custom.wakatime_api_key}};
-            if (!WAKA_KEY) {
-                var el = document.getElementById('bc-about-coding-now-text');
-                if (el) el.textContent = 'Tracking coding activity on the Now page.';
-                return;
-            }
             function secToHm(s) {
                 var h = Math.floor(s / 3600), m = Math.floor((s % 3600) / 60);
                 return h > 0 ? h + 'h' + (m > 0 ? ' ' + m + 'm' : '') : m + 'm';
             }
-            fetch('https://wakatime.com/api/v1/users/current/stats/last_7_days', {
-                headers: { 'Authorization': 'Basic ' + btoa(WAKA_KEY) }
-            })
+            fetch('/api/wakatime/users/current/stats/last_7_days')
                 .then(function (r) { if (!r.ok) throw new Error('waka'); return r.json(); })
                 .then(function (json) {
                     var data = json.data;

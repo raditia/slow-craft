@@ -96,7 +96,6 @@
 <script>
 (function () {
     var GITHUB = {{json @custom.github_username}};
-    var WAKA_KEY = {{json @custom.wakatime_api_key}};
 
     var LANG_COLORS = {
         'TypeScript': '#3178c6', 'JavaScript': '#f1e05a', 'Python': '#3572A5',
@@ -232,20 +231,16 @@
         }).join('');
     }
 
-    /* ---- Wakatime ---- */
-    if (WAKA_KEY) {
-        fetch('https://wakatime.com/api/v1/users/current/stats/last_7_days', {
-            headers: { 'Authorization': 'Basic ' + btoa(WAKA_KEY) }
-        })
-            .then(function (r) { if (!r.ok) throw new Error('waka'); return r.json(); })
-            .then(function (json) { if (json.data) renderWakatime(json.data); })
-            .catch(function () {
-                var h = document.getElementById('bc-now-waka-hours');
-                if (h) h.textContent = '—';
-                var a = document.getElementById('bc-now-waka-avg');
-                if (a) a.textContent = 'Wakatime data unavailable.';
-            });
-    }
+    /* ---- Wakatime (via server proxy — key never reaches browser) ---- */
+    fetch('/api/wakatime/users/current/stats/last_7_days')
+        .then(function (r) { if (!r.ok) throw new Error('waka'); return r.json(); })
+        .then(function (json) { if (json.data) renderWakatime(json.data); })
+        .catch(function () {
+            var h = document.getElementById('bc-now-waka-hours');
+            if (h) h.textContent = '—';
+            var a = document.getElementById('bc-now-waka-avg');
+            if (a) a.textContent = 'Wakatime data unavailable.';
+        });
 
     function renderWakatime(data) {
         var hoursEl = document.getElementById('bc-now-waka-hours');
