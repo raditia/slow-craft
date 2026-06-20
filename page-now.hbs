@@ -83,9 +83,24 @@
         <hr class="bc-now-divider">
         {{/if}}
 
-        <div class="bc-now-content gh-content bc-reveal">
-            {{content}}
+        {{! Reading section — Literal.club }}
+        <div class="bc-now-reading bc-reveal">
+            <div class="bc-now-section-label">
+                <span class="bc-now-dot"></span>
+                <span>{{t "Reading"}}</span>
+            </div>
+            <div id="bc-now-books">
+                <div class="bc-now-book">
+                    <div class="bc-now-book-cover bc-now-skeleton-cover"></div>
+                    <div class="bc-now-book-info">
+                        <div class="bc-now-skeleton-line" style="width:55%;margin-bottom:6px"></div>
+                        <div class="bc-now-skeleton-line" style="width:35%"></div>
+                    </div>
+                </div>
+            </div>
         </div>
+
+        <hr class="bc-now-divider">
 
         <p class="bc-now-footer bc-reveal">{{t "This is a"}} <a href="https://nownownow.com/about" target="_blank" rel="noopener">/now page</a>. {{t "It's meant to be updated, not archived."}}</p>
 
@@ -268,4 +283,50 @@
 })();
 </script>
 {{/if}}
+
+{{! Literal.club — Reading section }}
+<script>
+(function () {
+    var PROFILE_ID = 'cmqmlv3f36311780dogzrbxtgzi';
+
+    function esc(s) {
+        return String(s == null ? '' : s).replace(/[&<>"']/g, function (c) {
+            return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c];
+        });
+    }
+
+    fetch('/api/literal/', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+            query: '{ booksByReadingStateAndProfile(limit: 5, offset: 0, readingStatus: IS_READING, profileId: "' + PROFILE_ID + '") { title slug cover authors { name } } }'
+        })
+    })
+        .then(function (r) { if (!r.ok) throw new Error('literal'); return r.json(); })
+        .then(function (json) {
+            var books = json.data && json.data.booksByReadingStateAndProfile;
+            if (!books || !books.length) {
+                document.getElementById('bc-now-books').innerHTML = '<p style="color:var(--bc-text-4);font-family:var(--bc-font-body);font-size:15px;margin:0">Nothing on the reading pile right now.</p>';
+                return;
+            }
+            document.getElementById('bc-now-books').innerHTML = books.map(function (b) {
+                var authors = b.authors.map(function (a) { return esc(a.name); }).join(', ');
+                var coverHtml = b.cover
+                    ? '<img class="bc-now-book-cover" src="' + esc(b.cover) + '" alt="' + esc(b.title) + '" loading="lazy">'
+                    : '<div class="bc-now-book-cover bc-now-book-cover--empty"></div>';
+                var url = 'https://literal.club/book/' + esc(b.slug);
+                return '<a class="bc-now-book" href="' + url + '" target="_blank" rel="noopener">' +
+                    coverHtml +
+                    '<div class="bc-now-book-info">' +
+                        '<div class="bc-now-book-title">' + esc(b.title) + '</div>' +
+                        '<div class="bc-now-book-author">' + authors + '</div>' +
+                    '</div>' +
+                '</a>';
+            }).join('');
+        })
+        .catch(function () {
+            document.getElementById('bc-now-books').innerHTML = '<p style="color:var(--bc-text-4);font-family:var(--bc-font-body);font-size:15px;margin:0">Reading list unavailable right now.</p>';
+        });
+})();
+</script>
 {{/post}}

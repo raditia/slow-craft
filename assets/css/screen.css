@@ -3000,6 +3000,69 @@ img {
 }
 
 /* ============================================================
+   Now page — Reading section (Literal.club)
+   ============================================================ */
+.bc-now-reading {
+    padding: 0;
+}
+
+#bc-now-books {
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+}
+
+.bc-now-book {
+    display: grid;
+    grid-template-columns: 52px 1fr;
+    gap: 22px;
+    align-items: start;
+    text-decoration: none;
+    transition: opacity 0.2s ease;
+}
+
+.bc-now-book:hover { opacity: 0.8; }
+
+.bc-now-book-cover {
+    width: 52px;
+    height: 70px;
+    border-radius: 5px;
+    object-fit: cover;
+    display: block;
+    background: #ECE7DC;
+    flex: none;
+}
+
+.bc-now-book-cover--empty {
+    background: #ECE7DC;
+}
+
+.bc-now-skeleton-cover {
+    width: 52px;
+    height: 70px;
+    border-radius: 5px;
+    background: #E7E2D8;
+    flex: none;
+}
+
+.bc-now-book-info { padding-top: 4px; }
+
+.bc-now-book-title {
+    font-family: var(--bc-font-head);
+    font-size: 17px;
+    font-weight: 500;
+    color: var(--bc-text);
+    letter-spacing: -0.02em;
+    margin-bottom: 4px;
+}
+
+.bc-now-book-author {
+    font-family: var(--bc-font-body);
+    font-size: 13px;
+    color: var(--bc-text-4);
+}
+
+/* ============================================================
    About page — Coding now teaser
    ============================================================ */
 .bc-about-coding-now {
