@@ -87,18 +87,11 @@ The VPS auto-deploys from the `main` branch every minute. Workflow:
 2. Run `npx gulp build` if CSS changed
 3. `git push` — VPS picks up changes within 60 seconds
 
-Deploy log on VPS: `cat /var/log/ghost-theme-deploy.log`
+Deploy log on VPS: check the deploy log file configured in the deploy script.
 
 ### API proxies (Nginx on VPS)
 
-Both external APIs are proxied through Nginx — keys never reach the browser:
-
-| Proxy path | Upstream |
-|---|---|
-| `/api/wakatime/` | `wakatime.com/api/v1/` |
-| `/api/unsplash/` | `api.unsplash.com/` |
-
-Keys live in `/etc/nginx/sites-enabled/theboredcoder.com-ssl.conf`.
+Both external APIs are proxied through the server — keys never reach the browser. API keys are stored in the Nginx site config on the VPS, not in this repo.
 
 ---
 
