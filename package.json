@@ -1,7 +1,7 @@
 {
     "name": "the-bored-coder",
     "description": "The Bored Coder — a personal Ghost theme",
-    "version": "3.2.3",
+    "version": "3.2.4",
     "private": true,
     "engines": {
         "ghost": ">=5.0.0"

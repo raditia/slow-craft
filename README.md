@@ -1,42 +1,98 @@
-# Headline
+# The Bored Coder
 
-Headline is a [Ghost](https://github.com/TryGhost/Ghost) theme built from the ground up for local news. While it can be used for any purpose, the theme takes a thoughtful approach to displaying large amounts of content across various areas of coverage. Headline adapts to your content by showcasing your most written about topics or by giving you the control to decide which topics are front and center.
+A custom Ghost theme for [The Bored Coder](https://ghost.org) blog. Forked from the Headline starter theme and redesigned from scratch.
 
-**Demo: https://headline.ghost.io**
+---
 
-# Instructions
+## Using the theme
 
-1. [Download this theme](https://github.com/TryGhost/Headline/archive/main.zip)
-2. Log into Ghost, and go to the `Design` settings area to upload the zip file
+### Installation
 
-# Development
+1. Run `npm run zip` to build and package the theme
+2. In Ghost Admin → Settings → Design → Change theme → Upload ZIP
 
-Edition styles are compiled using Gulp/PostCSS to polyfill future CSS spec. You'll need [Node](https://nodejs.org/), [Yarn](https://yarnpkg.com/) and [Gulp](https://gulpjs.com) installed globally. After that, from the theme's root directory:
+### Featured post
+
+Mark any post as **Featured** in Ghost (post settings → Featured). The homepage will display it as a highlighted card above the Recent section. Only one featured post is shown; if multiple posts are featured, Ghost picks the most recent one.
+
+- Featured post **with image** — white card with shadow, "Category · Featured" kicker, "Read article →" link
+- Featured post **without image** — dark typographic card (`#1A1815`) with a left accent bar and a faded background word
+
+If no post is featured, the homepage falls back to the newest post as the hero (open layout, no white card).
+
+### Category tags and typographic cards
+
+The theme recognises three category tag slugs that affect card styling when a post has no feature image:
+
+| Tag slug | Typographic card background |
+|---|---|
+| `work` | `#EDE7DB` (warm sand) |
+| `growth` | `#DFE9E1` (sage green) |
+| `life` | `#E9DFE9` (soft lavender) |
+
+Posts without an image and without one of these slugs fall back to the default muted background.
+
+### TIL (Today I Learned) posts
+
+Tag posts with `til` to keep them out of the main homepage and writing feeds. They appear only on the `/til` page (backed by `page-til.hbs`). The filter `tag:-til` is applied to every homepage and writing-page query.
+
+### Custom settings (Ghost Admin → Design → Customize)
+
+| Setting | What it does |
+|---|---|
+| **Hero headlines** | Pipe-separated list. One is picked at random on each page load for the homepage headline. |
+| **Hero subtitles** | Same — pipe-separated, random pick per load. |
+| **Writing page URL** | URL used for "All writing →" links (default: `/writing`). |
+| **Footer tagline** | Short line after the copyright notice in the footer. |
+| **About — Location** | Displayed in the facts grid on the About page. |
+| **About — Day job** | Your current role, shown on the About page. |
+| **About — Writing since** | Year displayed in the About facts grid. |
+| **About — Currently into** | Pipe-separated list of current interests, rendered as individual items. |
+| **About — Email** | If set, shows an "Email me" button on the About page. |
+| **About — GitHub URL** | If set, shows a GitHub icon link on the About page. |
+| **About — The name explanation** | Short paragraph explaining the blog name, shown on the About page. |
+
+### Special pages
+
+These pages require a Ghost **Page** with the matching slug and the template selected under Page settings → Template:
+
+| Slug | Template | Purpose |
+|---|---|---|
+| `/about` | About | Author bio, facts grid, social links, currently-into list |
+| `/writing` | Writing | Full post index with tag filters |
+| `/photos` | Photos | Photo gallery using PhotoSwipe lightbox |
+| `/now` | Now page | Currently-reading book entry component |
+| `/til` | TIL | Today I Learned feed (only shows posts tagged `til`) |
+| `/newsletter` | Newsletter | Subscribe landing page |
+
+---
+
+## Development
 
 ```bash
-# Install
-yarn
-
-# Run build & watch for changes
-yarn dev
+npm install          # install dependencies
+npx gulp             # build + watch + livereload
+npx gulp build       # one-shot build (run before committing any CSS change)
+npm run test         # Ghost theme validation (gscan)
+npm run zip          # build + package dist/the-bored-coder.zip
 ```
 
-Now you can edit `/assets/css/` files, which will be compiled to `/assets/built/` automatically.
+Edit `/assets/css/screen.css` — it compiles to `/assets/built/screen.css`. Always commit both the source and built files.
 
-The `zip` Gulp task packages the theme files into `dist/headline.zip`, which you can then upload to your site.
+---
 
-```bash
-yarn zip
-```
+## Versioning
 
-# Contribution
+Bump `version` in `package.json` on every commit:
 
-This repo is synced automatically with [TryGhost/Themes](https://github.com/TryGhost/Themes) monorepo. If you're looking to contribute or raise an issue, head over to the main repository [TryGhost/Themes](https://github.com/TryGhost/Themes) where our official themes are developed.
+- **Major** — visual revamp or breaking redesign
+- **Minor** — new feature or layout change
+- **Patch** — bugfix or copy tweak
 
-### Theme translations
+Update this README when making any change that affects how the theme is used (new settings, new tag conventions, new special pages).
 
-Please see the @Tryghost/Themes/theme-translations/README.md for how to edit or contribute translations.
+---
 
-# Copyright & License
+## License
 
-Copyright (c) 2013-2026 Ghost Foundation - Released under the [MIT license](LICENSE).
+MIT — Copyright (c) 2013-2026 Ghost Foundation
