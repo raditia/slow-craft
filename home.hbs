@@ -35,6 +35,9 @@
             ================================================================ }}
 
         {{#get "posts" filter="tag:-til+featured:true" limit="1" include="authors,tags"}}
+            {{#if posts}}
+
+            {{! Featured post exists }}
             {{#foreach posts}}
             {{#if feature_image}}
             <a class="bc-featured bc-reveal" href="{{url}}">
@@ -97,7 +100,7 @@
                 {{/get}}
             </div>
 
-        {{else}}
+            {{else}}
 
             {{! No featured post — show newest as hero }}
             {{#get "posts" filter="tag:-til" limit="1" include="authors,tags"}}
@@ -162,6 +165,7 @@
                 {{/get}}
             </div>
 
+            {{/if}}
         {{/get}}
 
         {{! Newsletter strip }}
