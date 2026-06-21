@@ -299,7 +299,7 @@
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
-            query: '{ booksByReadingStateAndProfile(limit: 5, offset: 0, readingStatus: IS_READING, profileId: "' + PROFILE_ID + '") { title slug cover authors { name } } }'
+            query: '{ booksByReadingStateAndProfile(limit: 5, offset: 0, readingStatus: IS_READING, profileId: "' + PROFILE_ID + '") { title slug cover description authors { name } } }'
         })
     })
         .then(function (r) { if (!r.ok) throw new Error('literal'); return r.json(); })
@@ -315,11 +315,18 @@
                     ? '<img class="bc-now-book-cover" src="' + esc(b.cover) + '" alt="' + esc(b.title) + '" loading="lazy">'
                     : '<div class="bc-now-book-cover bc-now-book-cover--empty"></div>';
                 var url = 'https://literal.club/book/' + esc(b.slug);
+                var firstSentence = '';
+                if (b.description) {
+                    var match = b.description.match(/^[^.!?]*[.!?]/);
+                    firstSentence = match ? esc(match[0].trim()) : esc(b.description.slice(0, 120).trim());
+                }
+                var synopsisHtml = firstSentence ? '<div class="bc-now-book-synopsis">' + firstSentence + '</div>' : '';
                 return '<a class="bc-now-book" href="' + url + '" target="_blank" rel="noopener">' +
                     coverHtml +
                     '<div class="bc-now-book-info">' +
                         '<div class="bc-now-book-title">' + esc(b.title) + '</div>' +
                         '<div class="bc-now-book-author">' + authors + '</div>' +
+                        synopsisHtml +
                     '</div>' +
                 '</a>';
             }).join('');

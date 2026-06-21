@@ -3062,6 +3062,15 @@ img {
     color: var(--bc-text-4);
 }
 
+.bc-now-book-synopsis {
+    font-family: var(--bc-font-body);
+    font-size: 12px;
+    color: var(--bc-text-4);
+    margin-top: 6px;
+    line-height: 1.5;
+    opacity: 0.75;
+}
+
 /* ============================================================
    About page — Coding now teaser
    ============================================================ */
