@@ -316,7 +316,7 @@
                     : '<div class="bc-now-book-cover bc-now-book-cover--empty"></div>';
                 var url = 'https://literal.club/book/' + esc(b.slug);
                 var firstSentence = '';
-                if (b.description) {
+                if (b.description && b.description !== 'null') {
                     var match = b.description.match(/^[^.!?]*[.!?]/);
                     firstSentence = match ? esc(match[0].trim()) : esc(b.description.slice(0, 120).trim());
                 }
