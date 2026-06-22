@@ -151,7 +151,7 @@
 
     /* ---- GitHub ---- */
     if (GITHUB) {
-        fetch('https://api.github.com/users/' + encodeURIComponent(GITHUB) + '/events/public?per_page=30')
+        fetch('/api/github/events')
             .then(function (r) { if (!r.ok) throw new Error('gh'); return r.json(); })
             .then(function (events) {
                 var interesting = events.filter(function (e) {
@@ -182,9 +182,11 @@
     function renderCurrentlyBuilding(repo, pushEvent) {
         var card = document.getElementById('bc-now-currently-card');
         if (!card) return;
+        var isPrivate = pushEvent.public === false;
         var repoName = pushEvent.repo.name;
-        var desc  = repo && repo.description ? esc(repo.description) : '';
-        var lang  = repo && repo.language ? repo.language : '';
+        var displayName = isPrivate ? 'private repository' : repoName;
+        var desc  = !isPrivate && repo && repo.description ? esc(repo.description) : '';
+        var lang  = !isPrivate && repo && repo.language ? repo.language : '';
         var color = LANG_COLORS[lang] || '#8C8576';
         var pushed = timeAgo(pushEvent.created_at);
         card.innerHTML =
@@ -192,12 +194,12 @@
                 '<span class="bc-now-currently-dot"></span>' +
                 '<span>Currently building</span>' +
             '</div>' +
-            '<div class="bc-now-repo-name">' + esc(repoName) + '</div>' +
+            '<div class="bc-now-repo-name">' + esc(displayName) + '</div>' +
             (desc ? '<p class="bc-now-repo-desc">' + desc + '</p>' : '') +
             '<div class="bc-now-repo-meta">' +
                 (lang ? '<div class="bc-now-repo-lang"><span class="bc-now-repo-lang-dot" style="background:' + esc(color) + '"></span><span>' + esc(lang) + '</span></div><span class="bc-now-repo-sep"></span>' : '') +
                 '<span class="bc-now-repo-date">Last push ' + pushed + '</span>' +
-                '<a class="bc-now-repo-link" href="https://github.com/' + esc(repoName) + '" target="_blank" rel="noopener">View on GitHub &rarr;</a>' +
+                (!isPrivate ? '<a class="bc-now-repo-link" href="https://github.com/' + esc(repoName) + '" target="_blank" rel="noopener">View on GitHub &rarr;</a>' : '') +
             '</div>';
     }
 
@@ -208,30 +210,33 @@
         el.innerHTML = events.map(function (e) {
             var icon, action, msg = '';
             var repo = e.repo.name;
+            var repoDisplay = e.public === false ? 'private repository' : esc(repo);
             if (e.type === 'PushEvent') {
                 icon = ICONS.push;
-                action = 'Pushed to <strong>' + esc(repo) + '</strong>';
-                var commits = e.payload.commits || [];
-                var last = commits[commits.length - 1];
-                if (last) msg = esc(last.message.split('\n')[0]);
+                action = 'Pushed to <strong>' + repoDisplay + '</strong>';
+                if (e.public !== false) {
+                    var commits = e.payload.commits || [];
+                    var last = commits[commits.length - 1];
+                    if (last) msg = esc(last.message.split('\n')[0]);
+                }
             } else if (e.type === 'PullRequestEvent') {
                 icon = ICONS.pr;
                 var merged = e.payload.action === 'closed' && e.payload.pull_request && e.payload.pull_request.merged;
                 var pa = merged ? 'Merged' : e.payload.action === 'closed' ? 'Closed' : 'Opened';
-                action = pa + ' PR in <strong>' + esc(repo) + '</strong>';
-                if (e.payload.pull_request) msg = esc(e.payload.pull_request.title);
+                action = pa + ' PR in <strong>' + repoDisplay + '</strong>';
+                if (e.public !== false && e.payload.pull_request) msg = esc(e.payload.pull_request.title);
             } else if (e.type === 'IssuesEvent') {
                 icon = ICONS.issue;
-                action = (e.payload.action === 'closed' ? 'Closed issue in' : 'Opened issue in') + ' <strong>' + esc(repo) + '</strong>';
-                if (e.payload.issue) msg = esc(e.payload.issue.title);
+                action = (e.payload.action === 'closed' ? 'Closed issue in' : 'Opened issue in') + ' <strong>' + repoDisplay + '</strong>';
+                if (e.public !== false && e.payload.issue) msg = esc(e.payload.issue.title);
             } else if (e.type === 'ReleaseEvent') {
                 icon = ICONS.tag;
-                action = 'Released <strong>' + esc(repo) + '</strong>';
-                if (e.payload.release) msg = esc(e.payload.release.tag_name);
+                action = 'Released <strong>' + repoDisplay + '</strong>';
+                if (e.public !== false && e.payload.release) msg = esc(e.payload.release.tag_name);
             } else if (e.type === 'CreateEvent' && e.payload.ref_type === 'tag') {
                 icon = ICONS.tag;
-                action = 'Tagged <strong>' + esc(repo) + '</strong>';
-                if (e.payload.ref) msg = esc(e.payload.ref);
+                action = 'Tagged <strong>' + repoDisplay + '</strong>';
+                if (e.public !== false && e.payload.ref) msg = esc(e.payload.ref);
             } else {
                 return '';
             }
