@@ -193,7 +193,7 @@
         var repoName = pushEvent.repo.name;
         var displayName = isPrivate ? 'private repository' : repoName;
         var desc  = !isPrivate && repo && repo.description ? esc(repo.description) : '';
-        var lang  = !isPrivate && repo && repo.language ? repo.language : '';
+        var lang  = (repo && repo.language) ? repo.language : (pushEvent.repo && pushEvent.repo.language ? pushEvent.repo.language : '');
         var color = LANG_COLORS[lang] || '#8C8576';
         var pushed = timeAgo(pushEvent.created_at);
         card.innerHTML =
