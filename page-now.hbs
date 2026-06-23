@@ -10,9 +10,7 @@
             {{#if custom_excerpt}}
                 <p class="bc-page-description">{{custom_excerpt}}</p>
             {{/if}}
-            {{#if updated_at}}
-                <p class="bc-now-updated">{{t "Last updated"}} <time datetime="{{date updated_at format="YYYY-MM-DD"}}">{{date updated_at format="DD MMM YYYY"}}</time></p>
-            {{/if}}
+                <p class="bc-now-updated">{{t "Last updated"}} <time id="bc-now-last-updated" datetime="{{date updated_at format="YYYY-MM-DD"}}">{{date updated_at format="DD MMM YYYY"}}</time></p>
         </div>
 
         {{! Building section — GitHub + Wakatime }}
@@ -169,7 +167,16 @@
                     if (card) card.innerHTML = '';
                 }
 
-                renderCommits(interesting.slice(0, 5));
+                renderCommits(interesting.slice(0, 3));
+
+                var lastUpdatedEl = document.getElementById('bc-now-last-updated');
+                if (lastUpdatedEl && events.length) {
+                    var d = new Date(events[0].created_at);
+                    var months = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+                    var formatted = d.getDate() + ' ' + months[d.getMonth()] + ' ' + d.getFullYear();
+                    lastUpdatedEl.setAttribute('datetime', d.toISOString().slice(0, 10));
+                    lastUpdatedEl.textContent = formatted;
+                }
             })
             .catch(function () {
                 var card = document.getElementById('bc-now-currently-card');
