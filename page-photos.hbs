@@ -88,15 +88,17 @@
 
         showMeta(photos, ts || Date.now());
 
+        var UTM = '?utm_source=the-bored-coder&utm_medium=referral';
+
         photos.forEach(function (photo) {
             var item = document.createElement('div');
             item.className = 'bc-photo-item bc-reveal';
 
             var link = document.createElement('a');
-            link.href = photo.links.html;
+            link.href = photo.links.html + UTM;
             link.target = '_blank';
             link.rel = 'noopener';
-            link.setAttribute('aria-label', photo.alt_description || 'Photo by ' + photo.user.name);
+            link.setAttribute('aria-label', photo.alt_description || 'Photo by ' + photo.user.name + ' on Unsplash');
 
             var img = document.createElement('img');
             img.setAttribute('data-src', photo.urls.regular);
@@ -106,8 +108,19 @@
             img.className = 'bc-photo-img';
             img.style.aspectRatio = photo.width + ' / ' + photo.height;
 
+            var caption = document.createElement('div');
+            caption.className = 'bc-photo-caption';
+
+            var byline = document.createElement('a');
+            byline.href = photo.user.links.html + UTM;
+            byline.target = '_blank';
+            byline.rel = 'noopener';
+            byline.textContent = 'Photo by ' + photo.user.name;
+
+            caption.appendChild(byline);
             link.appendChild(img);
             item.appendChild(link);
+            item.appendChild(caption);
             grid.appendChild(item);
             io.observe(img);
         });
@@ -160,9 +173,9 @@
             }
             loading.style.display = 'none';
             if (err.message === 'rate_limited') {
-                errorEl.innerHTML = '<p>Photos are taking a break. <a href="https://unsplash.com/@' + UNSPLASH_USER + '" target="_blank" rel="noopener">View on Unsplash</a> in the meantime.</p>';
+                errorEl.innerHTML = '<p>Photos are taking a break. <a href="https://unsplash.com/@' + UNSPLASH_USER + '?utm_source=the-bored-coder&utm_medium=referral" target="_blank" rel="noopener">View on Unsplash</a> in the meantime.</p>';
             } else {
-                errorEl.innerHTML = '<p>Photos unavailable right now. <a href="https://unsplash.com/@' + UNSPLASH_USER + '" target="_blank" rel="noopener">View on Unsplash</a>.</p>';
+                errorEl.innerHTML = '<p>Photos unavailable right now. <a href="https://unsplash.com/@' + UNSPLASH_USER + '?utm_source=the-bored-coder&utm_medium=referral" target="_blank" rel="noopener">View on Unsplash</a>.</p>';
             }
             errorEl.style.display = 'block';
             console.error('Unsplash fetch failed:', err.message);

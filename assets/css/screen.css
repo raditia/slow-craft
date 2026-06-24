@@ -1648,12 +1648,41 @@ img {
     margin-bottom: 22px;
     overflow: hidden;
     border-radius: 10px;
+    position: relative;
     transition: transform 0.5s ease, box-shadow 0.5s ease;
 }
 
 .bc-photo-item:hover {
     transform: translateY(-4px);
     box-shadow: 0 22px 44px -24px rgba(26, 24, 21, 0.4);
+}
+
+.bc-photo-caption {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    padding: 24px 12px 10px;
+    background: linear-gradient(transparent, rgba(0, 0, 0, 0.55));
+    border-radius: 0 0 10px 10px;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.bc-photo-item:hover .bc-photo-caption {
+    opacity: 1;
+}
+
+.bc-photo-caption a {
+    color: rgba(255, 255, 255, 0.9);
+    font-family: var(--bc-font-body);
+    font-size: 12px;
+    text-decoration: none;
+}
+
+.bc-photo-caption a:hover {
+    color: #fff;
+    text-decoration: underline;
 }
 
 .bc-photo-img {
