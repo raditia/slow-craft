@@ -158,10 +158,14 @@
 
                 var push = events.find(function (e) { return e.type === 'PushEvent'; });
                 if (push) {
-                    fetch('https://api.github.com/repos/' + push.repo.name)
-                        .then(function (r) { return r.json(); })
-                        .then(function (repo) { renderCurrentlyBuilding(repo, push); })
-                        .catch(function () { renderCurrentlyBuilding(null, push); });
+                    if (push.public === false) {
+                        renderCurrentlyBuilding(null, push);
+                    } else {
+                        fetch('https://api.github.com/repos/' + push.repo.name)
+                            .then(function (r) { return r.json(); })
+                            .then(function (repo) { renderCurrentlyBuilding(repo, push); })
+                            .catch(function () { renderCurrentlyBuilding(null, push); });
+                    }
                 } else {
                     var card = document.getElementById('bc-now-currently-card');
                     if (card) card.innerHTML = '';
